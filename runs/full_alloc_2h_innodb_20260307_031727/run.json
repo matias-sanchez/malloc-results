@@ -1,0 +1,30 @@
+{
+  "allocators": [
+    "glibc-2.28",
+    "mimalloc-2.2.7",
+    "jemalloc-5.2.1",
+    "jemalloc-5.3.0",
+    "tcmalloc-2.9.1",
+    "jemalloc-5.2.1/decay500/bgon",
+    "jemalloc-5.2.1/decay500/bgoff",
+    "jemalloc-5.2.1/decay1500/bgon",
+    "jemalloc-5.2.1/decay1500/bgoff",
+    "jemalloc-5.2.1/decay3000/bgon",
+    "jemalloc-5.2.1/decay3000/bgoff",
+    "jemalloc-5.2.1/decay6000/bgon",
+    "jemalloc-5.2.1/decay6000/bgoff",
+    "jemalloc-5.3.0/decay500/bgon",
+    "jemalloc-5.3.0/decay500/bgoff",
+    "jemalloc-5.3.0/decay1500/bgon",
+    "jemalloc-5.3.0/decay1500/bgoff",
+    "jemalloc-5.3.0/decay3000/bgon",
+    "jemalloc-5.3.0/decay3000/bgoff",
+    "jemalloc-5.3.0/decay6000/bgon",
+    "jemalloc-5.3.0/decay6000/bgoff"
+  ],
+  "chart_count": 27,
+  "git_rev": "",
+  "published_at_utc": "2026-03-07 06:17:48 UTC",
+  "run_id": "full_alloc_2h_innodb_20260307_031727",
+  "url": "runs/full_alloc_2h_innodb_20260307_031727/index.html"
+}

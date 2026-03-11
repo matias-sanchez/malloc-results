@@ -1,0 +1,629 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Malloc Tests Plot Navigator - full_alloc_2h_rocksdb_20260304_232646</title>
+  <style>
+    :root {
+      --bg: #f6f5f1;
+      --panel: #fffdf7;
+      --ink: #121313;
+      --muted: #5a5f66;
+      --line: #d6d8d1;
+      --accent: #0f766e;
+      --accent-2: #14532d;
+      --workload: #8a4b08;
+      --matrix: #19477b;
+      --settings: #5b21b6;
+      --shadow: 0 14px 28px rgba(18, 19, 19, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100dvh;
+      font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 5% 0%, rgba(15, 118, 110, 0.18), transparent 30%),
+        radial-gradient(circle at 100% 100%, rgba(20, 83, 45, 0.16), transparent 26%),
+        var(--bg);
+    }
+
+    .page {
+      min-height: 100dvh;
+      height: 100dvh;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+    }
+
+    .topbar {
+      padding: 20px 24px 16px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(135deg, rgba(255, 253, 247, 0.9), rgba(240, 248, 245, 0.9));
+      backdrop-filter: blur(2px);
+    }
+
+    .kicker {
+      margin: 0;
+      font-size: 12px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .title-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 6px;
+    }
+
+    h1 {
+      margin: 0;
+      font-family: "Bebas Neue", "Arial Narrow", sans-serif;
+      letter-spacing: 0.04em;
+      font-size: clamp(34px, 5vw, 56px);
+      line-height: 1;
+    }
+
+    .run-id {
+      font-family: "IBM Plex Mono", "SFMono-Regular", monospace;
+      font-size: 13px;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.75);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 6px 10px;
+    }
+
+    .stats {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+
+    .stat-chip {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 12px;
+      background: rgba(255, 255, 255, 0.85);
+      color: var(--muted);
+    }
+
+    .stat-chip strong {
+      color: var(--ink);
+      margin-left: 4px;
+    }
+
+    .shell {
+      display: grid;
+      grid-template-columns: minmax(280px, 360px) minmax(0, 1fr);
+      gap: 16px;
+      padding: 16px 16px 20px;
+      min-height: 0;
+      overflow: hidden;
+      transition: grid-template-columns 220ms ease;
+    }
+
+    body.sidebar-collapsed .shell {
+      grid-template-columns: 76px minmax(0, 1fr);
+    }
+
+    .sidebar {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      overflow-x: hidden;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(90, 95, 102, 0.55) transparent;
+    }
+
+    .sidebar::-webkit-scrollbar {
+      width: 12px;
+    }
+
+    .sidebar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .sidebar::-webkit-scrollbar-thumb {
+      border-radius: 999px;
+      border: 3px solid transparent;
+      background-clip: padding-box;
+      background: rgba(90, 95, 102, 0.48);
+    }
+
+    .sidebar-head {
+      padding: 14px 14px 10px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(246, 245, 241, 0.78));
+    }
+
+    .sidebar-copy {
+      min-width: 0;
+    }
+
+    .sidebar-kicker {
+      margin: 0 0 3px;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .sidebar-title {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .sidebar-toggle {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: white;
+      color: var(--ink);
+      padding: 8px 10px;
+      min-width: 42px;
+      font-size: 18px;
+      line-height: 1;
+      cursor: pointer;
+      box-shadow: 0 8px 16px rgba(18, 19, 19, 0.08);
+      transition: transform 180ms ease, box-shadow 180ms ease;
+    }
+
+    .sidebar-toggle:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 24px rgba(18, 19, 19, 0.12);
+    }
+
+    .toolbar {
+      padding: 12px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      background: rgba(246, 245, 241, 0.7);
+      border-bottom: 1px solid var(--line);
+      position: sticky;
+      top: 0;
+      z-index: 2;
+    }
+
+    .pill {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: white;
+      color: var(--muted);
+      font-size: 12px;
+      padding: 7px 10px;
+      cursor: pointer;
+    }
+
+    .pill.active {
+      color: white;
+      border-color: transparent;
+      background: linear-gradient(120deg, var(--accent), var(--accent-2));
+    }
+
+    .list {
+      flex: 0 0 auto;
+      min-height: 0;
+      overflow: visible;
+      padding: 10px 10px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .group {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      overflow: hidden;
+      background: white;
+    }
+
+    .group-head {
+      margin: 0;
+      padding: 9px 12px;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border-bottom: 1px solid var(--line);
+      background: rgba(246, 245, 241, 0.9);
+    }
+
+    .asset {
+      width: 100%;
+      text-align: left;
+      border: 0;
+      border-top: 1px solid var(--line);
+      background: white;
+      padding: 11px 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .asset:first-of-type {
+      border-top: 0;
+    }
+
+    .asset:hover {
+      background: #f7fdfa;
+    }
+
+    .asset.active {
+      background: #ecf8f6;
+    }
+
+    .asset-title {
+      font-size: 14px;
+      color: var(--ink);
+      margin: 0;
+    }
+
+    .badge {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border-radius: 999px;
+      padding: 5px 7px;
+      color: white;
+      min-width: 72px;
+      text-align: center;
+    }
+
+    .badge.workload {
+      background: var(--workload);
+    }
+
+    .badge.matrix {
+      background: var(--matrix);
+    }
+
+    .badge.settings {
+      background: var(--settings);
+    }
+
+    .viewer {
+      min-width: 0;
+      min-height: 0;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .viewer-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(180deg, #ffffff, #f8faf8);
+    }
+
+    .viewer-title {
+      margin: 0;
+      font-family: "IBM Plex Sans", sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .open-link {
+      font-size: 12px;
+      color: var(--accent-2);
+      text-decoration: none;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 6px 9px;
+      background: white;
+    }
+
+    iframe {
+      width: 100%;
+      flex: 1 1 auto;
+      min-height: 0;
+      border: 0;
+      background: #fff;
+    }
+
+    .empty {
+      margin: auto;
+      max-width: 560px;
+      padding: 24px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    body.sidebar-collapsed .sidebar-copy,
+    body.sidebar-collapsed .toolbar,
+    body.sidebar-collapsed .list {
+      display: none;
+    }
+
+    body.sidebar-collapsed .sidebar {
+      align-items: center;
+    }
+
+    body.sidebar-collapsed .sidebar-head {
+      width: 100%;
+      padding: 12px 10px;
+      border-bottom: 0;
+      justify-content: center;
+    }
+
+    body.sidebar-collapsed .sidebar-toggle {
+      transform: rotate(180deg);
+    }
+
+    @media (max-width: 1050px) {
+      .page {
+        height: auto;
+        min-height: 100dvh;
+      }
+
+      .shell {
+        grid-template-columns: 1fr;
+        min-height: unset;
+        overflow: visible;
+      }
+
+      .sidebar {
+        max-height: min(52dvh, 720px);
+      }
+
+      .viewer {
+        min-height: 70vh;
+      }
+
+      body.sidebar-collapsed .shell {
+        grid-template-columns: 1fr;
+      }
+
+      body.sidebar-collapsed .sidebar {
+        max-height: 84px;
+      }
+
+      body.sidebar-collapsed .sidebar-copy {
+        display: block;
+      }
+
+      body.sidebar-collapsed .toolbar,
+      body.sidebar-collapsed .list {
+        display: none;
+      }
+
+      body.sidebar-collapsed .sidebar-head {
+        justify-content: space-between;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="topbar">
+      <p class="kicker">Malloc Tests V2</p>
+      <div class="title-row">
+        <h1>Plots Navigator</h1>
+        <span class="run-id">full_alloc_2h_rocksdb_20260304_232646</span>
+      </div>
+      <div class="stats">
+        <span class="stat-chip">Workload charts <strong>9</strong></span>
+        <span class="stat-chip">Matrix charts <strong>18</strong></span>
+        <span class="stat-chip">Settings views <strong>0</strong></span>
+        <span class="stat-chip">Total views <strong>27</strong></span>
+      </div>
+    </div>
+
+    <div class="shell">
+      <aside class="sidebar">
+        <div class="sidebar-head">
+          <div class="sidebar-copy">
+            <p class="sidebar-kicker">Navigator</p>
+            <h2 class="sidebar-title">Chart Browser</h2>
+          </div>
+          <button
+            id="sidebarToggle"
+            type="button"
+            class="sidebar-toggle"
+            aria-expanded="true"
+            aria-label="Collapse sidebar"
+            title="Collapse sidebar"
+          >&#8249;</button>
+        </div>
+        <div class="toolbar">
+          <button type="button" class="pill active" data-filter="all">All</button>
+          <button type="button" class="pill" data-filter="workload">Workload</button>
+          <button type="button" class="pill" data-filter="matrix">Matrix</button>
+          <button type="button" class="pill" data-filter="settings">Settings</button>
+        </div>
+        <div id="assetList" class="list"></div>
+      </aside>
+
+      <section class="viewer">
+        <div class="viewer-head">
+          <h2 id="viewerTitle" class="viewer-title">Select a chart</h2>
+          <a id="openLink" class="open-link" href="#" target="_blank" rel="noopener">Open in new tab</a>
+        </div>
+        <iframe id="viewerFrame" title="Plot preview"></iframe>
+        <div id="emptyState" class="empty" hidden>No chart matched the selected filter.</div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    const assets = [{"key":"base:workload_mysql_status_explorer","title":"MySQL Status Explorer","href":"workload_mysql_status_explorer.html","category":"workload","group":"Workload allocators"},{"key":"base:workload_qps_custom_load_over_time","title":"Custom Load QPS","href":"workload_qps_custom_load_over_time.html","category":"workload","group":"Workload allocators"},{"key":"base:workload_qps_sysbench_split_over_time","title":"Sysbench QPS (Writer/Reader)","href":"workload_qps_sysbench_split_over_time.html","category":"workload","group":"Workload allocators"},{"key":"base:workload_qps_total_over_time","title":"Total QPS (Combined)","href":"workload_qps_total_over_time.html","category":"workload","group":"Workload allocators"},{"key":"base:workload_query_mix_by_node_comparison","title":"Query Mix by Node","href":"workload_query_mix_by_node_comparison.html","category":"workload","group":"Workload allocators"},{"key":"base:workload_rss_node1_over_time","title":"Node1 RSS Over Time","href":"workload_rss_node1_over_time.html","category":"workload","group":"Workload allocators"},{"key":"base:workload_summary_kpi_comparison","title":"KPI Comparison","href":"workload_summary_kpi_comparison.html","category":"workload","group":"Workload allocators"},{"key":"base:workload_tps_custom_load_over_time","title":"Custom Load TPS","href":"workload_tps_custom_load_over_time.html","category":"workload","group":"Workload allocators"},{"key":"base:workload_tps_sysbench_split_over_time","title":"Sysbench TPS (Writer/Reader)","href":"workload_tps_sysbench_split_over_time.html","category":"workload","group":"Workload allocators"},{"key":"matrix:jemalloc-5.2.1:workload_mysql_status_explorer","title":"MySQL Status Explorer","href":"matrix/jemalloc-5.2.1/workload_mysql_status_explorer.html","category":"matrix","group":"jemalloc-5.2.1"},{"key":"matrix:jemalloc-5.2.1:workload_qps_custom_load_over_time","title":"Custom Load QPS","href":"matrix/jemalloc-5.2.1/workload_qps_custom_load_over_time.html","category":"matrix","group":"jemalloc-5.2.1"},{"key":"matrix:jemalloc-5.2.1:workload_qps_sysbench_split_over_time","title":"Sysbench QPS (Writer/Reader)","href":"matrix/jemalloc-5.2.1/workload_qps_sysbench_split_over_time.html","category":"matrix","group":"jemalloc-5.2.1"},{"key":"matrix:jemalloc-5.2.1:workload_qps_total_over_time","title":"Total QPS (Combined)","href":"matrix/jemalloc-5.2.1/workload_qps_total_over_time.html","category":"matrix","group":"jemalloc-5.2.1"},{"key":"matrix:jemalloc-5.2.1:workload_query_mix_by_node_comparison","title":"Query Mix by Node","href":"matrix/jemalloc-5.2.1/workload_query_mix_by_node_comparison.html","category":"matrix","group":"jemalloc-5.2.1"},{"key":"matrix:jemalloc-5.2.1:workload_rss_node1_over_time","title":"Node1 RSS Over Time","href":"matrix/jemalloc-5.2.1/workload_rss_node1_over_time.html","category":"matrix","group":"jemalloc-5.2.1"},{"key":"matrix:jemalloc-5.2.1:workload_summary_kpi_comparison","title":"KPI Comparison","href":"matrix/jemalloc-5.2.1/workload_summary_kpi_comparison.html","category":"matrix","group":"jemalloc-5.2.1"},{"key":"matrix:jemalloc-5.2.1:workload_tps_custom_load_over_time","title":"Custom Load TPS","href":"matrix/jemalloc-5.2.1/workload_tps_custom_load_over_time.html","category":"matrix","group":"jemalloc-5.2.1"},{"key":"matrix:jemalloc-5.2.1:workload_tps_sysbench_split_over_time","title":"Sysbench TPS (Writer/Reader)","href":"matrix/jemalloc-5.2.1/workload_tps_sysbench_split_over_time.html","category":"matrix","group":"jemalloc-5.2.1"},{"key":"matrix:jemalloc-5.3.0:workload_mysql_status_explorer","title":"MySQL Status Explorer","href":"matrix/jemalloc-5.3.0/workload_mysql_status_explorer.html","category":"matrix","group":"jemalloc-5.3.0"},{"key":"matrix:jemalloc-5.3.0:workload_qps_custom_load_over_time","title":"Custom Load QPS","href":"matrix/jemalloc-5.3.0/workload_qps_custom_load_over_time.html","category":"matrix","group":"jemalloc-5.3.0"},{"key":"matrix:jemalloc-5.3.0:workload_qps_sysbench_split_over_time","title":"Sysbench QPS (Writer/Reader)","href":"matrix/jemalloc-5.3.0/workload_qps_sysbench_split_over_time.html","category":"matrix","group":"jemalloc-5.3.0"},{"key":"matrix:jemalloc-5.3.0:workload_qps_total_over_time","title":"Total QPS (Combined)","href":"matrix/jemalloc-5.3.0/workload_qps_total_over_time.html","category":"matrix","group":"jemalloc-5.3.0"},{"key":"matrix:jemalloc-5.3.0:workload_query_mix_by_node_comparison","title":"Query Mix by Node","href":"matrix/jemalloc-5.3.0/workload_query_mix_by_node_comparison.html","category":"matrix","group":"jemalloc-5.3.0"},{"key":"matrix:jemalloc-5.3.0:workload_rss_node1_over_time","title":"Node1 RSS Over Time","href":"matrix/jemalloc-5.3.0/workload_rss_node1_over_time.html","category":"matrix","group":"jemalloc-5.3.0"},{"key":"matrix:jemalloc-5.3.0:workload_summary_kpi_comparison","title":"KPI Comparison","href":"matrix/jemalloc-5.3.0/workload_summary_kpi_comparison.html","category":"matrix","group":"jemalloc-5.3.0"},{"key":"matrix:jemalloc-5.3.0:workload_tps_custom_load_over_time","title":"Custom Load TPS","href":"matrix/jemalloc-5.3.0/workload_tps_custom_load_over_time.html","category":"matrix","group":"jemalloc-5.3.0"},{"key":"matrix:jemalloc-5.3.0:workload_tps_sysbench_split_over_time","title":"Sysbench TPS (Writer/Reader)","href":"matrix/jemalloc-5.3.0/workload_tps_sysbench_split_over_time.html","category":"matrix","group":"jemalloc-5.3.0"}];
+    const assetList = document.getElementById("assetList");
+    const viewerFrame = document.getElementById("viewerFrame");
+    const viewerTitle = document.getElementById("viewerTitle");
+    const openLink = document.getElementById("openLink");
+    const emptyState = document.getElementById("emptyState");
+    const pills = [...document.querySelectorAll(".pill")];
+    const sidebarToggle = document.getElementById("sidebarToggle");
+    const collapseStorageKey = "malloc-tests-plots-nav-sidebar";
+
+    let activeFilter = "all";
+    let activeKey = null;
+
+    function grouped(filtered) {
+      const bucket = new Map();
+      for (const item of filtered) {
+        if (!bucket.has(item.group)) {
+          bucket.set(item.group, []);
+        }
+        bucket.get(item.group).push(item);
+      }
+      return [...bucket.entries()];
+    }
+
+    function pickDefault(filtered) {
+      if (!filtered.length) {
+        return null;
+      }
+      if (!activeKey) {
+        return filtered[0].key;
+      }
+      return filtered.some((item) => item.key === activeKey) ? activeKey : filtered[0].key;
+    }
+
+    function applySelection(item) {
+      if (!item) {
+        viewerFrame.setAttribute("src", "about:blank");
+        viewerTitle.textContent = "No chart available";
+        openLink.setAttribute("href", "#");
+        openLink.style.visibility = "hidden";
+        emptyState.hidden = false;
+        return;
+      }
+      activeKey = item.key;
+      viewerFrame.setAttribute("src", item.href);
+      viewerTitle.textContent = `${item.title} - ${item.group}`;
+      openLink.setAttribute("href", item.href);
+      openLink.style.visibility = "visible";
+      emptyState.hidden = true;
+    }
+
+    function setSidebarCollapsed(collapsed) {
+      document.body.classList.toggle("sidebar-collapsed", collapsed);
+      sidebarToggle.setAttribute("aria-expanded", String(!collapsed));
+      sidebarToggle.setAttribute("aria-label", collapsed ? "Expand sidebar" : "Collapse sidebar");
+      sidebarToggle.setAttribute("title", collapsed ? "Expand sidebar" : "Collapse sidebar");
+      sidebarToggle.innerHTML = collapsed ? "&#8250;" : "&#8249;";
+      try {
+        window.localStorage.setItem(collapseStorageKey, collapsed ? "collapsed" : "expanded");
+      } catch (error) {
+        console.warn("Unable to persist sidebar state", error);
+      }
+    }
+
+    function render() {
+      const filtered = assets.filter((item) => activeFilter === "all" || item.category === activeFilter);
+      const selectedKey = pickDefault(filtered);
+      assetList.innerHTML = "";
+
+      if (!filtered.length) {
+        applySelection(null);
+        return;
+      }
+
+      for (const [groupName, items] of grouped(filtered)) {
+        const group = document.createElement("section");
+        group.className = "group";
+
+        const heading = document.createElement("h3");
+        heading.className = "group-head";
+        heading.textContent = groupName;
+        group.appendChild(heading);
+
+        for (const item of items) {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "asset";
+          if (item.key === selectedKey) {
+            button.classList.add("active");
+          }
+          button.addEventListener("click", () => {
+            activeKey = item.key;
+            render();
+          });
+
+          const title = document.createElement("p");
+          title.className = "asset-title";
+          title.textContent = item.title;
+
+          const badge = document.createElement("span");
+          badge.className = `badge ${item.category}`;
+          badge.textContent = item.category;
+
+          button.appendChild(title);
+          button.appendChild(badge);
+          group.appendChild(button);
+        }
+
+        assetList.appendChild(group);
+      }
+
+      const selected = filtered.find((item) => item.key === selectedKey) || filtered[0];
+      applySelection(selected);
+    }
+
+    for (const pill of pills) {
+      pill.addEventListener("click", () => {
+        activeFilter = pill.dataset.filter || "all";
+        for (const candidate of pills) {
+          candidate.classList.toggle("active", candidate === pill);
+        }
+        render();
+      });
+    }
+
+    sidebarToggle.addEventListener("click", () => {
+      setSidebarCollapsed(!document.body.classList.contains("sidebar-collapsed"));
+    });
+
+    try {
+      setSidebarCollapsed(window.localStorage.getItem(collapseStorageKey) === "collapsed");
+    } catch (error) {
+      setSidebarCollapsed(false);
+    }
+
+    render();
+  </script>
+</body>
+</html>

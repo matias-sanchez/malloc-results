@@ -5,39 +5,281 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Malloc Results</title>
   <style>
+    :root {
+      --bg: #f7f7f4;
+      --panel: #fffdf8;
+      --ink: #111827;
+      --muted: #475569;
+      --line: #d8d8cf;
+      --accent: #0f766e;
+      --accent-dark: #115e59;
+      --shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+    }
+    * { box-sizing: border-box; }
     body {
       margin: 0;
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      padding: 24px;
+      min-height: 100dvh;
       font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
-      color: #111827;
+      color: var(--ink);
       background:
         radial-gradient(circle at top left, rgba(15, 118, 110, 0.12), transparent 35%),
         linear-gradient(180deg, #fafaf8 0%, #f4f5f0 100%);
     }
-    main {
-      max-width: 720px;
+    .page {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 36px 20px 72px;
+    }
+    .hero {
       padding: 28px;
-      border: 1px solid #d8d8cf;
+      border: 1px solid var(--line);
       border-radius: 24px;
       background: rgba(255, 253, 248, 0.92);
-      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+      box-shadow: var(--shadow);
     }
-    p {
+    .eyebrow {
+      margin: 0 0 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-size: 12px;
+      color: var(--accent);
+      font-weight: 700;
+    }
+    h1 {
+      margin: 0;
+      font-family: "Bebas Neue", "Arial Narrow", sans-serif;
+      letter-spacing: 0.04em;
+      font-size: clamp(38px, 6vw, 60px);
+      line-height: 0.95;
+    }
+    .hero-copy {
+      margin: 12px 0 0;
+      max-width: 720px;
+      color: var(--muted);
       line-height: 1.6;
-      color: #475569;
+    }
+    .hero-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 18px;
+    }
+    .primary-link,
+    .secondary-link,
+    .run-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      border-radius: 999px;
+      font-weight: 700;
+      transition: transform 120ms ease, opacity 120ms ease;
+    }
+    .primary-link:hover,
+    .secondary-link:hover,
+    .run-link:hover {
+      transform: translateY(-1px);
+      opacity: 0.95;
+    }
+    .primary-link {
+      padding: 12px 16px;
+      background: var(--accent);
+      color: #ffffff;
+    }
+    .secondary-link {
+      padding: 12px 16px;
+      border: 1px solid var(--line);
+      color: var(--ink);
+      background: #ffffff;
+    }
+    .section {
+      margin-top: 28px;
+    }
+    .section-title {
+      margin: 0 0 14px;
+      font-size: 18px;
+      font-weight: 800;
+    }
+    .run-grid {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+    .run-card {
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 18px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+    .run-card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .run-card h3 {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.2;
+      word-break: break-word;
+    }
+    .run-link {
+      padding: 9px 12px;
+      background: #111827;
+      color: #ffffff;
+      white-space: nowrap;
+    }
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .chip {
+      display: inline-flex;
+      flex-direction: column;
+      gap: 4px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #ffffff;
+      padding: 10px 12px;
+      min-width: 120px;
+    }
+    .chip-label {
+      color: var(--muted);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+    }
+    .chip-value {
+      font-size: 13px;
+      line-height: 1.4;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      overflow: hidden;
+      background: rgba(255, 253, 248, 0.92);
+      box-shadow: var(--shadow);
+    }
+    th, td {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      font-size: 14px;
+    }
+    th {
+      background: rgba(15, 118, 110, 0.08);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+    td a {
+      color: var(--accent-dark);
+      text-decoration: none;
+      font-weight: 700;
+    }
+    .empty-state {
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 22px;
+      background: var(--panel);
+      color: var(--muted);
+    }
+    .footer {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    @media (max-width: 720px) {
+      .page {
+        padding: 20px 14px 52px;
+      }
+      .hero {
+        padding: 22px;
+      }
+      th, td {
+        padding: 12px;
+      }
     }
   </style>
 </head>
 <body>
-  <main>
-    <h1>Malloc Results</h1>
-    <p>
-      This GitHub Pages site is ready. The first real publish will replace this
-      placeholder with the public-safe run archive generated from malloc test plots.
-    </p>
+  <main class="page">
+    <section class="hero">
+      <p class="eyebrow">Malloc Results</p>
+      <h1>Malloc Results</h1>
+      <p class="hero-copy">
+        Public-safe archive of malloc test plot bundles. Sensitive runtime settings and
+        raw environment configuration are intentionally excluded from this site.
+      </p>
+      <div class="hero-links">
+        <a class="primary-link" href="latest/">Open latest run</a>
+        <a class="secondary-link" href="runs.json">Open JSON index</a>
+      </div>
+    </section>
+    <section class="section">
+      <h2 class="section-title">Latest 2 Runs</h2>
+      
+      <article class="run-card">
+        <div class="run-card-header">
+          <h3>full_alloc_2h_innodb_20260307_031727</h3>
+          <a class="run-link" href="runs/full_alloc_2h_innodb_20260307_031727/index.html">Open</a>
+        </div>
+        <div class="chip-row"><span class="chip"><span class="chip-label">Published</span><span class="chip-value">2026-03-07 06:17:48 UTC</span></span><span class="chip"><span class="chip-label">Charts</span><span class="chip-value">27</span></span><span class="chip"><span class="chip-label">Allocators</span><span class="chip-value">glibc-2.28, mimalloc-2.2.7, jemalloc-5.2.1, jemalloc-5.3.0, tcmalloc-2.9.1, jemalloc-5.2.1/decay500/bgon, jemalloc-5.2.1/decay500/bgoff, jemalloc-5.2.1/decay1500/bgon, jemalloc-5.2.1/decay1500/bgoff, jemalloc-5.2.1/decay3000/bgon, jemalloc-5.2.1/decay3000/bgoff, jemalloc-5.2.1/decay6000/bgon, jemalloc-5.2.1/decay6000/bgoff, jemalloc-5.3.0/decay500/bgon, jemalloc-5.3.0/decay500/bgoff, jemalloc-5.3.0/decay1500/bgon, jemalloc-5.3.0/decay1500/bgoff, jemalloc-5.3.0/decay3000/bgon, jemalloc-5.3.0/decay3000/bgoff, jemalloc-5.3.0/decay6000/bgon, jemalloc-5.3.0/decay6000/bgoff</span></span></div>
+      </article>
+
+      <article class="run-card">
+        <div class="run-card-header">
+          <h3>full_alloc_2h_rocksdb_20260304_232646</h3>
+          <a class="run-link" href="runs/full_alloc_2h_rocksdb_20260304_232646/index.html">Open</a>
+        </div>
+        <div class="chip-row"><span class="chip"><span class="chip-label">Published</span><span class="chip-value">2026-03-05 02:27:10 UTC</span></span><span class="chip"><span class="chip-label">Charts</span><span class="chip-value">27</span></span><span class="chip"><span class="chip-label">Allocators</span><span class="chip-value">glibc-2.28, mimalloc-2.2.7, jemalloc-5.2.1, jemalloc-5.3.0, tcmalloc-2.9.1, jemalloc-5.2.1/decay500/bgon, jemalloc-5.2.1/decay500/bgoff, jemalloc-5.2.1/decay1500/bgon, jemalloc-5.2.1/decay1500/bgoff, jemalloc-5.2.1/decay3000/bgon, jemalloc-5.2.1/decay3000/bgoff, jemalloc-5.2.1/decay6000/bgon, jemalloc-5.2.1/decay6000/bgoff, jemalloc-5.3.0/decay500/bgon, jemalloc-5.3.0/decay500/bgoff, jemalloc-5.3.0/decay1500/bgon, jemalloc-5.3.0/decay1500/bgoff, jemalloc-5.3.0/decay3000/bgon, jemalloc-5.3.0/decay3000/bgoff, jemalloc-5.3.0/decay6000/bgon, jemalloc-5.3.0/decay6000/bgoff</span></span></div>
+      </article>
+
+    </section>
+    <section class="section">
+      <h2 class="section-title">Archive</h2>
+      
+      <table>
+        <thead>
+          <tr>
+            <th>Run</th>
+            <th>Published</th>
+            <th>Git</th>
+            <th>Charts</th>
+            <th>Allocators</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td><a href="runs/full_alloc_2h_innodb_20260307_031727/index.html">full_alloc_2h_innodb_20260307_031727</a></td>
+          <td>2026-03-07 06:17:48 UTC</td>
+          <td>n/a</td>
+          <td>27</td>
+          <td>glibc-2.28, mimalloc-2.2.7, jemalloc-5.2.1, jemalloc-5.3.0, tcmalloc-2.9.1, jemalloc-5.2.1/decay500/bgon, jemalloc-5.2.1/decay500/bgoff, jemalloc-5.2.1/decay1500/bgon, jemalloc-5.2.1/decay1500/bgoff, jemalloc-5.2.1/decay3000/bgon, jemalloc-5.2.1/decay3000/bgoff, jemalloc-5.2.1/decay6000/bgon, jemalloc-5.2.1/decay6000/bgoff, jemalloc-5.3.0/decay500/bgon, jemalloc-5.3.0/decay500/bgoff, jemalloc-5.3.0/decay1500/bgon, jemalloc-5.3.0/decay1500/bgoff, jemalloc-5.3.0/decay3000/bgon, jemalloc-5.3.0/decay3000/bgoff, jemalloc-5.3.0/decay6000/bgon, jemalloc-5.3.0/decay6000/bgoff</td>
+        </tr>
+
+        <tr>
+          <td><a href="runs/full_alloc_2h_rocksdb_20260304_232646/index.html">full_alloc_2h_rocksdb_20260304_232646</a></td>
+          <td>2026-03-05 02:27:10 UTC</td>
+          <td>n/a</td>
+          <td>27</td>
+          <td>glibc-2.28, mimalloc-2.2.7, jemalloc-5.2.1, jemalloc-5.3.0, tcmalloc-2.9.1, jemalloc-5.2.1/decay500/bgon, jemalloc-5.2.1/decay500/bgoff, jemalloc-5.2.1/decay1500/bgon, jemalloc-5.2.1/decay1500/bgoff, jemalloc-5.2.1/decay3000/bgon, jemalloc-5.2.1/decay3000/bgoff, jemalloc-5.2.1/decay6000/bgon, jemalloc-5.2.1/decay6000/bgoff, jemalloc-5.3.0/decay500/bgon, jemalloc-5.3.0/decay500/bgoff, jemalloc-5.3.0/decay1500/bgon, jemalloc-5.3.0/decay1500/bgoff, jemalloc-5.3.0/decay3000/bgon, jemalloc-5.3.0/decay3000/bgoff, jemalloc-5.3.0/decay6000/bgon, jemalloc-5.3.0/decay6000/bgoff</td>
+        </tr>
+</tbody>
+      </table>
+      
+    </section>
+    <p class="footer">Generated 2026-03-11 02:04:40 UTC</p>
   </main>
 </body>
 </html>
