@@ -9,9 +9,10 @@
       "tcmalloc-2.9.1"
     ],
     "decay_ms": [],
+    "matrix_family_label": "allocator",
     "matrix_versions": [],
     "mode": "comparison",
-    "overview": "Allocator comparison: 5 baseline allocators",
+    "overview": "Workload comparison: 5 allocators",
     "tested_combinations": 0
   },
   "allocators": [

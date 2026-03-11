@@ -10,9 +10,10 @@
         "tcmalloc-2.9.1"
       ],
       "decay_ms": [],
+      "matrix_family_label": "allocator",
       "matrix_versions": [],
       "mode": "comparison",
-      "overview": "Allocator comparison: 5 baseline allocators",
+      "overview": "Workload comparison: 5 allocators",
       "tested_combinations": 0
     },
     "allocators": [
@@ -47,12 +48,13 @@
         3000,
         6000
       ],
+      "matrix_family_label": "jemalloc",
       "matrix_versions": [
         "jemalloc-5.2.1",
         "jemalloc-5.3.0"
       ],
       "mode": "matrix",
-      "overview": "Matrix sweep: 2 versions, each tested with 4 decay values and 2 background modes (16 total combinations)",
+      "overview": "Workload: 5 allocators + jemalloc matrix: 2 versions x 4 decay values x 2 background modes = 16 combinations",
       "tested_combinations": 16
     },
     "allocators": [
@@ -103,12 +105,13 @@
         3000,
         6000
       ],
+      "matrix_family_label": "jemalloc",
       "matrix_versions": [
         "jemalloc-5.2.1",
         "jemalloc-5.3.0"
       ],
       "mode": "matrix",
-      "overview": "Matrix sweep: 2 versions, each tested with 4 decay values and 2 background modes (16 total combinations)",
+      "overview": "Workload: 5 allocators + jemalloc matrix: 2 versions x 4 decay values x 2 background modes = 16 combinations",
       "tested_combinations": 16
     },
     "allocators": [
