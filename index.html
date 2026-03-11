@@ -118,6 +118,22 @@
       line-height: 1.2;
       word-break: break-word;
     }
+    .run-card-actions {
+      display: grid;
+      justify-items: end;
+      gap: 10px;
+      flex: 0 0 auto;
+    }
+    .run-published {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.2;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-align: right;
+      white-space: nowrap;
+    }
     .run-link {
       padding: 9px 12px;
       background: #111827;
@@ -371,6 +387,16 @@
       .hero {
         padding: 22px;
       }
+      .run-card-header {
+        flex-direction: column;
+      }
+      .run-card-actions {
+        justify-items: start;
+      }
+      .run-published {
+        text-align: left;
+        white-space: normal;
+      }
       .coverage-board,
       .matrix-equation,
       .matrix-detail-grid {
@@ -397,9 +423,11 @@
       <article class="run-card">
         <div class="run-card-header">
           <h3>full_alloc_2h_innodb_20260310_024730</h3>
-          <a class="run-link" href="runs/full_alloc_2h_innodb_20260310_024730/index.html">Open</a>
+          <div class="run-card-actions">
+            <p class="run-published">2026-03-11 03:35:50 UTC</p>
+            <a class="run-link" href="runs/full_alloc_2h_innodb_20260310_024730/index.html">Open</a>
+          </div>
         </div>
-        <div class="chip-row"><span class="chip"><span class="chip-label">Published</span><span class="chip-value">2026-03-11 03:35:50 UTC</span></span><span class="chip"><span class="chip-label">Charts</span><span class="chip-value">9</span></span></div>
         
         <section class="allocator-panel">
           <div class="allocator-header">
@@ -426,9 +454,11 @@
       <article class="run-card">
         <div class="run-card-header">
           <h3>full_alloc_2h_rocksdb_20260304_232646</h3>
-          <a class="run-link" href="runs/full_alloc_2h_rocksdb_20260304_232646/index.html">Open</a>
+          <div class="run-card-actions">
+            <p class="run-published">2026-03-11 03:35:50 UTC</p>
+            <a class="run-link" href="runs/full_alloc_2h_rocksdb_20260304_232646/index.html">Open</a>
+          </div>
         </div>
-        <div class="chip-row"><span class="chip"><span class="chip-label">Published</span><span class="chip-value">2026-03-11 03:35:50 UTC</span></span><span class="chip"><span class="chip-label">Charts</span><span class="chip-value">27</span></span></div>
         
         <section class="allocator-panel">
           <div class="allocator-header">
@@ -508,9 +538,11 @@
       <article class="run-card">
         <div class="run-card-header">
           <h3>full_alloc_2h_innodb_20260307_031727</h3>
-          <a class="run-link" href="runs/full_alloc_2h_innodb_20260307_031727/index.html">Open</a>
+          <div class="run-card-actions">
+            <p class="run-published">2026-03-11 03:35:49 UTC</p>
+            <a class="run-link" href="runs/full_alloc_2h_innodb_20260307_031727/index.html">Open</a>
+          </div>
         </div>
-        <div class="chip-row"><span class="chip"><span class="chip-label">Published</span><span class="chip-value">2026-03-11 03:35:49 UTC</span></span><span class="chip"><span class="chip-label">Charts</span><span class="chip-value">27</span></span></div>
         
         <section class="allocator-panel">
           <div class="allocator-header">
@@ -629,7 +661,7 @@
       </table>
       
     </section>
-    <p class="footer">Generated 2026-03-11 04:26:25 UTC</p>
+    <p class="footer">Generated 2026-03-11 04:28:38 UTC</p>
   </main>
 </body>
 </html>
