@@ -151,6 +151,84 @@
       font-size: 13px;
       line-height: 1.4;
     }
+    .allocator-panel {
+      margin-top: 18px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(247, 247, 242, 0.92));
+    }
+    .allocator-header {
+      display: grid;
+      gap: 6px;
+    }
+    .allocator-kicker {
+      margin: 0;
+      color: var(--muted);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-weight: 700;
+    }
+    .allocator-overview {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.45;
+      font-weight: 700;
+      color: var(--ink);
+      max-width: 900px;
+    }
+    .allocator-grid {
+      display: grid;
+      gap: 12px;
+      margin-top: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+    .allocator-group {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 14px;
+      background: rgba(255, 255, 255, 0.88);
+    }
+    .allocator-group--base {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(246, 248, 245, 0.94));
+    }
+    .allocator-group--version {
+      background: linear-gradient(180deg, rgba(236, 253, 245, 0.98), rgba(255, 255, 255, 0.9));
+    }
+    .allocator-group--decay {
+      background: linear-gradient(180deg, rgba(255, 247, 237, 0.98), rgba(255, 255, 255, 0.9));
+    }
+    .allocator-group--background {
+      background: linear-gradient(180deg, rgba(239, 246, 255, 0.98), rgba(255, 255, 255, 0.9));
+    }
+    .allocator-group-label {
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+    }
+    .allocator-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .allocator-pill {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      border: 1px solid rgba(17, 24, 39, 0.09);
+      background: rgba(255, 255, 255, 0.96);
+      padding: 7px 11px;
+      font-size: 13px;
+      line-height: 1.2;
+      font-weight: 700;
+      color: var(--ink);
+      box-shadow: 0 4px 10px rgba(15, 23, 42, 0.03);
+    }
     table {
       width: 100%;
       border-collapse: collapse;
@@ -224,15 +302,23 @@
           <h3>full_alloc_2h_innodb_20260310_024730</h3>
           <a class="run-link" href="runs/full_alloc_2h_innodb_20260310_024730/index.html">Open</a>
         </div>
-        <div class="chip-row"><span class="chip"><span class="chip-label">Published</span><span class="chip-value">2026-03-10 05:47:50 UTC</span></span><span class="chip"><span class="chip-label">Charts</span><span class="chip-value">9</span></span><span class="chip"><span class="chip-label">Allocators</span><span class="chip-value">glibc-2.28, mimalloc-2.2.7, jemalloc-5.2.1, jemalloc-5.3.0, tcmalloc-2.9.1</span></span></div>
-      </article>
+        <div class="chip-row"><span class="chip"><span class="chip-label">Published</span><span class="chip-value">2026-03-11 03:35:50 UTC</span></span><span class="chip"><span class="chip-label">Charts</span><span class="chip-value">9</span></span></div>
+        
+        <section class="allocator-panel">
+          <div class="allocator-header">
+            <p class="allocator-kicker">Allocator coverage</p>
+            <p class="allocator-overview">Allocator comparison: 5 baseline allocators</p>
+          </div>
+          <div class="allocator-grid">
+            
+      <section class="allocator-group allocator-group--base">
+        <p class="allocator-group-label">Baseline allocators</p>
+        <div class="allocator-pills"><span class="allocator-pill">glibc-2.28</span><span class="allocator-pill">mimalloc-2.2.7</span><span class="allocator-pill">jemalloc-5.2.1</span><span class="allocator-pill">jemalloc-5.3.0</span><span class="allocator-pill">tcmalloc-2.9.1</span></div>
+      </section>
 
-      <article class="run-card">
-        <div class="run-card-header">
-          <h3>full_alloc_2h_innodb_20260307_031727</h3>
-          <a class="run-link" href="runs/full_alloc_2h_innodb_20260307_031727/index.html">Open</a>
-        </div>
-        <div class="chip-row"><span class="chip"><span class="chip-label">Published</span><span class="chip-value">2026-03-07 06:17:48 UTC</span></span><span class="chip"><span class="chip-label">Charts</span><span class="chip-value">27</span></span><span class="chip"><span class="chip-label">Allocators</span><span class="chip-value">glibc-2.28, mimalloc-2.2.7, jemalloc-5.2.1, jemalloc-5.3.0, tcmalloc-2.9.1, jemalloc-5.2.1/decay500/bgon, jemalloc-5.2.1/decay500/bgoff, jemalloc-5.2.1/decay1500/bgon, jemalloc-5.2.1/decay1500/bgoff, jemalloc-5.2.1/decay3000/bgon, jemalloc-5.2.1/decay3000/bgoff, jemalloc-5.2.1/decay6000/bgon, jemalloc-5.2.1/decay6000/bgoff, jemalloc-5.3.0/decay500/bgon, jemalloc-5.3.0/decay500/bgoff, jemalloc-5.3.0/decay1500/bgon, jemalloc-5.3.0/decay1500/bgoff, jemalloc-5.3.0/decay3000/bgon, jemalloc-5.3.0/decay3000/bgoff, jemalloc-5.3.0/decay6000/bgon, jemalloc-5.3.0/decay6000/bgoff</span></span></div>
+          </div>
+        </section>
+
       </article>
 
       <article class="run-card">
@@ -240,7 +326,77 @@
           <h3>full_alloc_2h_rocksdb_20260304_232646</h3>
           <a class="run-link" href="runs/full_alloc_2h_rocksdb_20260304_232646/index.html">Open</a>
         </div>
-        <div class="chip-row"><span class="chip"><span class="chip-label">Published</span><span class="chip-value">2026-03-05 02:27:10 UTC</span></span><span class="chip"><span class="chip-label">Charts</span><span class="chip-value">27</span></span><span class="chip"><span class="chip-label">Allocators</span><span class="chip-value">glibc-2.28, mimalloc-2.2.7, jemalloc-5.2.1, jemalloc-5.3.0, tcmalloc-2.9.1, jemalloc-5.2.1/decay500/bgon, jemalloc-5.2.1/decay500/bgoff, jemalloc-5.2.1/decay1500/bgon, jemalloc-5.2.1/decay1500/bgoff, jemalloc-5.2.1/decay3000/bgon, jemalloc-5.2.1/decay3000/bgoff, jemalloc-5.2.1/decay6000/bgon, jemalloc-5.2.1/decay6000/bgoff, jemalloc-5.3.0/decay500/bgon, jemalloc-5.3.0/decay500/bgoff, jemalloc-5.3.0/decay1500/bgon, jemalloc-5.3.0/decay1500/bgoff, jemalloc-5.3.0/decay3000/bgon, jemalloc-5.3.0/decay3000/bgoff, jemalloc-5.3.0/decay6000/bgon, jemalloc-5.3.0/decay6000/bgoff</span></span></div>
+        <div class="chip-row"><span class="chip"><span class="chip-label">Published</span><span class="chip-value">2026-03-11 03:35:50 UTC</span></span><span class="chip"><span class="chip-label">Charts</span><span class="chip-value">27</span></span></div>
+        
+        <section class="allocator-panel">
+          <div class="allocator-header">
+            <p class="allocator-kicker">Allocator coverage</p>
+            <p class="allocator-overview">Matrix sweep: 2 versions x 4 decay values x 2 background modes = 16 tested combinations</p>
+          </div>
+          <div class="allocator-grid">
+            
+      <section class="allocator-group allocator-group--base">
+        <p class="allocator-group-label">Baseline allocators</p>
+        <div class="allocator-pills"><span class="allocator-pill">glibc-2.28</span><span class="allocator-pill">mimalloc-2.2.7</span><span class="allocator-pill">jemalloc-5.2.1</span><span class="allocator-pill">jemalloc-5.3.0</span><span class="allocator-pill">tcmalloc-2.9.1</span></div>
+      </section>
+
+      <section class="allocator-group allocator-group--version">
+        <p class="allocator-group-label">Versions</p>
+        <div class="allocator-pills"><span class="allocator-pill">jemalloc-5.2.1</span><span class="allocator-pill">jemalloc-5.3.0</span></div>
+      </section>
+
+      <section class="allocator-group allocator-group--decay">
+        <p class="allocator-group-label">Decay values</p>
+        <div class="allocator-pills"><span class="allocator-pill">500 ms</span><span class="allocator-pill">1500 ms</span><span class="allocator-pill">3000 ms</span><span class="allocator-pill">6000 ms</span></div>
+      </section>
+
+      <section class="allocator-group allocator-group--background">
+        <p class="allocator-group-label">Background thread</p>
+        <div class="allocator-pills"><span class="allocator-pill">thread on</span><span class="allocator-pill">thread off</span></div>
+      </section>
+
+          </div>
+        </section>
+
+      </article>
+
+      <article class="run-card">
+        <div class="run-card-header">
+          <h3>full_alloc_2h_innodb_20260307_031727</h3>
+          <a class="run-link" href="runs/full_alloc_2h_innodb_20260307_031727/index.html">Open</a>
+        </div>
+        <div class="chip-row"><span class="chip"><span class="chip-label">Published</span><span class="chip-value">2026-03-11 03:35:49 UTC</span></span><span class="chip"><span class="chip-label">Charts</span><span class="chip-value">27</span></span></div>
+        
+        <section class="allocator-panel">
+          <div class="allocator-header">
+            <p class="allocator-kicker">Allocator coverage</p>
+            <p class="allocator-overview">Matrix sweep: 2 versions x 4 decay values x 2 background modes = 16 tested combinations</p>
+          </div>
+          <div class="allocator-grid">
+            
+      <section class="allocator-group allocator-group--base">
+        <p class="allocator-group-label">Baseline allocators</p>
+        <div class="allocator-pills"><span class="allocator-pill">glibc-2.28</span><span class="allocator-pill">mimalloc-2.2.7</span><span class="allocator-pill">jemalloc-5.2.1</span><span class="allocator-pill">jemalloc-5.3.0</span><span class="allocator-pill">tcmalloc-2.9.1</span></div>
+      </section>
+
+      <section class="allocator-group allocator-group--version">
+        <p class="allocator-group-label">Versions</p>
+        <div class="allocator-pills"><span class="allocator-pill">jemalloc-5.2.1</span><span class="allocator-pill">jemalloc-5.3.0</span></div>
+      </section>
+
+      <section class="allocator-group allocator-group--decay">
+        <p class="allocator-group-label">Decay values</p>
+        <div class="allocator-pills"><span class="allocator-pill">500 ms</span><span class="allocator-pill">1500 ms</span><span class="allocator-pill">3000 ms</span><span class="allocator-pill">6000 ms</span></div>
+      </section>
+
+      <section class="allocator-group allocator-group--background">
+        <p class="allocator-group-label">Background thread</p>
+        <div class="allocator-pills"><span class="allocator-pill">thread on</span><span class="allocator-pill">thread off</span></div>
+      </section>
+
+          </div>
+        </section>
+
       </article>
 
     </section>
@@ -254,38 +410,38 @@
             <th>Published</th>
             <th>Git</th>
             <th>Charts</th>
-            <th>Allocators</th>
+            <th>Coverage</th>
           </tr>
         </thead>
         <tbody>
         <tr>
           <td><a href="runs/full_alloc_2h_innodb_20260310_024730/index.html">full_alloc_2h_innodb_20260310_024730</a></td>
-          <td>2026-03-10 05:47:50 UTC</td>
+          <td>2026-03-11 03:35:50 UTC</td>
           <td>n/a</td>
           <td>9</td>
-          <td>glibc-2.28, mimalloc-2.2.7, jemalloc-5.2.1, jemalloc-5.3.0, tcmalloc-2.9.1</td>
-        </tr>
-
-        <tr>
-          <td><a href="runs/full_alloc_2h_innodb_20260307_031727/index.html">full_alloc_2h_innodb_20260307_031727</a></td>
-          <td>2026-03-07 06:17:48 UTC</td>
-          <td>n/a</td>
-          <td>27</td>
-          <td>glibc-2.28, mimalloc-2.2.7, jemalloc-5.2.1, jemalloc-5.3.0, tcmalloc-2.9.1, jemalloc-5.2.1/decay500/bgon, jemalloc-5.2.1/decay500/bgoff, jemalloc-5.2.1/decay1500/bgon, jemalloc-5.2.1/decay1500/bgoff, jemalloc-5.2.1/decay3000/bgon, jemalloc-5.2.1/decay3000/bgoff, jemalloc-5.2.1/decay6000/bgon, jemalloc-5.2.1/decay6000/bgoff, jemalloc-5.3.0/decay500/bgon, jemalloc-5.3.0/decay500/bgoff, jemalloc-5.3.0/decay1500/bgon, jemalloc-5.3.0/decay1500/bgoff, jemalloc-5.3.0/decay3000/bgon, jemalloc-5.3.0/decay3000/bgoff, jemalloc-5.3.0/decay6000/bgon, jemalloc-5.3.0/decay6000/bgoff</td>
+          <td>Allocator comparison: 5 baseline allocators</td>
         </tr>
 
         <tr>
           <td><a href="runs/full_alloc_2h_rocksdb_20260304_232646/index.html">full_alloc_2h_rocksdb_20260304_232646</a></td>
-          <td>2026-03-05 02:27:10 UTC</td>
+          <td>2026-03-11 03:35:50 UTC</td>
           <td>n/a</td>
           <td>27</td>
-          <td>glibc-2.28, mimalloc-2.2.7, jemalloc-5.2.1, jemalloc-5.3.0, tcmalloc-2.9.1, jemalloc-5.2.1/decay500/bgon, jemalloc-5.2.1/decay500/bgoff, jemalloc-5.2.1/decay1500/bgon, jemalloc-5.2.1/decay1500/bgoff, jemalloc-5.2.1/decay3000/bgon, jemalloc-5.2.1/decay3000/bgoff, jemalloc-5.2.1/decay6000/bgon, jemalloc-5.2.1/decay6000/bgoff, jemalloc-5.3.0/decay500/bgon, jemalloc-5.3.0/decay500/bgoff, jemalloc-5.3.0/decay1500/bgon, jemalloc-5.3.0/decay1500/bgoff, jemalloc-5.3.0/decay3000/bgon, jemalloc-5.3.0/decay3000/bgoff, jemalloc-5.3.0/decay6000/bgon, jemalloc-5.3.0/decay6000/bgoff</td>
+          <td>Matrix sweep: 2 versions x 4 decay values x 2 background modes = 16 tested combinations</td>
+        </tr>
+
+        <tr>
+          <td><a href="runs/full_alloc_2h_innodb_20260307_031727/index.html">full_alloc_2h_innodb_20260307_031727</a></td>
+          <td>2026-03-11 03:35:49 UTC</td>
+          <td>n/a</td>
+          <td>27</td>
+          <td>Matrix sweep: 2 versions x 4 decay values x 2 background modes = 16 tested combinations</td>
         </tr>
 </tbody>
       </table>
       
     </section>
-    <p class="footer">Generated 2026-03-11 02:16:10 UTC</p>
+    <p class="footer">Generated 2026-03-11 03:35:59 UTC</p>
   </main>
 </body>
 </html>

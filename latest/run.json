@@ -1,4 +1,19 @@
 {
+  "allocator_summary": {
+    "background_thread_modes": [],
+    "base_allocators": [
+      "glibc-2.28",
+      "mimalloc-2.2.7",
+      "jemalloc-5.2.1",
+      "jemalloc-5.3.0",
+      "tcmalloc-2.9.1"
+    ],
+    "decay_ms": [],
+    "matrix_versions": [],
+    "mode": "comparison",
+    "overview": "Allocator comparison: 5 baseline allocators",
+    "tested_combinations": 0
+  },
   "allocators": [
     "glibc-2.28",
     "mimalloc-2.2.7",
@@ -8,7 +23,7 @@
   ],
   "chart_count": 9,
   "git_rev": "",
-  "published_at_utc": "2026-03-10 05:47:50 UTC",
+  "published_at_utc": "2026-03-11 03:35:50 UTC",
   "run_id": "full_alloc_2h_innodb_20260310_024730",
   "url": "runs/full_alloc_2h_innodb_20260310_024730/index.html"
 }
