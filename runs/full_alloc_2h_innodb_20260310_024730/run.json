@@ -26,5 +26,6 @@
   "git_rev": "",
   "published_at_utc": "2026-03-11 03:35:50 UTC",
   "run_id": "full_alloc_2h_innodb_20260310_024730",
+  "storage_engine": "InnoDB",
   "url": "runs/full_alloc_2h_innodb_20260310_024730/index.html"
 }

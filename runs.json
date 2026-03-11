@@ -27,6 +27,7 @@
     "git_rev": "",
     "published_at_utc": "2026-03-11 03:35:50 UTC",
     "run_id": "full_alloc_2h_innodb_20260310_024730",
+    "storage_engine": "InnoDB",
     "url": "runs/full_alloc_2h_innodb_20260310_024730/index.html"
   },
   {
@@ -84,6 +85,7 @@
     "git_rev": "",
     "published_at_utc": "2026-03-11 03:35:50 UTC",
     "run_id": "full_alloc_2h_rocksdb_20260304_232646",
+    "storage_engine": "RocksDB",
     "url": "runs/full_alloc_2h_rocksdb_20260304_232646/index.html"
   },
   {
@@ -141,6 +143,7 @@
     "git_rev": "",
     "published_at_utc": "2026-03-11 03:35:49 UTC",
     "run_id": "full_alloc_2h_innodb_20260307_031727",
+    "storage_engine": "InnoDB",
     "url": "runs/full_alloc_2h_innodb_20260307_031727/index.html"
   }
 ]
