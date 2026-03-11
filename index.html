@@ -171,14 +171,6 @@
       letter-spacing: 0.12em;
       font-weight: 700;
     }
-    .allocator-overview {
-      margin: 0;
-      font-size: 18px;
-      line-height: 1.45;
-      font-weight: 700;
-      color: var(--ink);
-      max-width: 900px;
-    }
     .allocator-group {
       border: 1px solid var(--line);
       border-radius: 18px;
@@ -235,6 +227,9 @@
       padding: 18px;
       box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
     }
+    .coverage-card--single {
+      margin-top: 18px;
+    }
     .coverage-card--workload {
       background:
         radial-gradient(circle at top left, rgba(15, 118, 110, 0.07), transparent 42%),
@@ -245,31 +240,32 @@
         radial-gradient(circle at top right, rgba(15, 118, 110, 0.08), transparent 32%),
         linear-gradient(180deg, rgba(243, 250, 248, 0.98), rgba(255, 255, 255, 0.94));
     }
-    .coverage-head {
-      display: grid;
-      gap: 6px;
+    .coverage-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
     }
-    .coverage-kicker {
+    .coverage-section-title {
       margin: 0;
-      color: var(--accent-dark);
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      font-weight: 700;
-    }
-    .coverage-title {
-      margin: 0;
-      font-size: 24px;
+      font-size: 20px;
       line-height: 1.15;
       font-weight: 800;
-      max-width: 18ch;
     }
-    .coverage-copy {
-      margin: 0;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.5;
-      max-width: 52ch;
+    .coverage-stat {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      padding: 8px 12px;
+      border: 1px solid rgba(15, 118, 110, 0.14);
+      background: rgba(255, 255, 255, 0.78);
+      color: var(--accent-dark);
+      font-size: 12px;
+      line-height: 1;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 800;
     }
     .coverage-card .allocator-group {
       margin-top: 18px;
@@ -407,9 +403,14 @@
         <section class="allocator-panel">
           <div class="allocator-header">
             <p class="allocator-kicker">Allocator coverage</p>
-            <p class="allocator-overview">Workload comparison: 5 allocators</p>
           </div>
-          <div class="allocator-grid">
+          <div class="coverage-card coverage-card--workload coverage-card--single">
+            <div class="coverage-bar">
+              <h4 class="coverage-section-title">Workload comparison</h4>
+              <span class="coverage-stat">
+                5 allocators
+              </span>
+            </div>
             
       <section class="allocator-group allocator-group--workload">
         <p class="allocator-group-label">Workload allocator comparison</p>
@@ -431,18 +432,14 @@
         <section class="allocator-panel">
           <div class="allocator-header">
             <p class="allocator-kicker">Allocator coverage</p>
-            <p class="allocator-overview">Two layers were exercised in this run.</p>
           </div>
           <div class="coverage-board">
             <section class="coverage-card coverage-card--workload">
-              <div class="coverage-head">
-                <p class="coverage-kicker">Workload comparison</p>
-                <h4 class="coverage-title">
-                  5 allocator families across the core workload charts
-                </h4>
-                <p class="coverage-copy">
-                  These are the primary allocator variants compared in the workload plots.
-                </p>
+              <div class="coverage-bar">
+                <h4 class="coverage-section-title">Workload comparison</h4>
+                <span class="coverage-stat">
+                  5 allocators
+                </span>
               </div>
               
       <section class="allocator-group allocator-group--workload">
@@ -452,15 +449,11 @@
 
             </section>
             <section class="coverage-card coverage-card--matrix">
-              <div class="coverage-head">
-                <p class="coverage-kicker">Matrix expansion</p>
-                <h4 class="coverage-title">
-                  16 tuned combinations for the jemalloc matrix sweep
-                </h4>
-                <p class="coverage-copy">
-                  The same run also expands jemalloc
-                  into a parameter sweep.
-                </p>
+              <div class="coverage-bar">
+                <h4 class="coverage-section-title">jemalloc matrix sweep</h4>
+                <span class="coverage-stat">
+                  16 combos
+                </span>
               </div>
               
           <div class="matrix-equation">
@@ -521,18 +514,14 @@
         <section class="allocator-panel">
           <div class="allocator-header">
             <p class="allocator-kicker">Allocator coverage</p>
-            <p class="allocator-overview">Two layers were exercised in this run.</p>
           </div>
           <div class="coverage-board">
             <section class="coverage-card coverage-card--workload">
-              <div class="coverage-head">
-                <p class="coverage-kicker">Workload comparison</p>
-                <h4 class="coverage-title">
-                  5 allocator families across the core workload charts
-                </h4>
-                <p class="coverage-copy">
-                  These are the primary allocator variants compared in the workload plots.
-                </p>
+              <div class="coverage-bar">
+                <h4 class="coverage-section-title">Workload comparison</h4>
+                <span class="coverage-stat">
+                  5 allocators
+                </span>
               </div>
               
       <section class="allocator-group allocator-group--workload">
@@ -542,15 +531,11 @@
 
             </section>
             <section class="coverage-card coverage-card--matrix">
-              <div class="coverage-head">
-                <p class="coverage-kicker">Matrix expansion</p>
-                <h4 class="coverage-title">
-                  16 tuned combinations for the jemalloc matrix sweep
-                </h4>
-                <p class="coverage-copy">
-                  The same run also expands jemalloc
-                  into a parameter sweep.
-                </p>
+              <div class="coverage-bar">
+                <h4 class="coverage-section-title">jemalloc matrix sweep</h4>
+                <span class="coverage-stat">
+                  16 combos
+                </span>
               </div>
               
           <div class="matrix-equation">
@@ -643,7 +628,7 @@
       </table>
       
     </section>
-    <p class="footer">Generated 2026-03-11 04:14:47 UTC</p>
+    <p class="footer">Generated 2026-03-11 04:19:19 UTC</p>
   </main>
 </body>
 </html>
