@@ -453,6 +453,40 @@
       <article class="run-card">
         <div class="run-card-header">
           <div class="run-title-row">
+            <h3>full_alloc_2h_innodb_20260312_021038</h3>
+            <span class="engine-badge engine-badge--innodb">InnoDB</span>
+          </div>
+          <div class="run-card-actions">
+            <p class="run-test-date">2026-03-12 02:10:38</p>
+            <a class="run-link" href="runs/full_alloc_2h_innodb_20260312_021038/index.html">Open</a>
+          </div>
+        </div>
+        
+        <section class="allocator-panel">
+          <div class="allocator-header">
+            <p class="allocator-kicker">Allocator coverage</p>
+          </div>
+          <div class="coverage-card coverage-card--workload coverage-card--single">
+            <div class="coverage-bar">
+              <h4 class="coverage-section-title">Workload comparison</h4>
+              <span class="coverage-stat">
+                5 allocators
+              </span>
+            </div>
+            
+      <section class="allocator-group allocator-group--workload">
+        <p class="allocator-group-label">Allocators</p>
+        <div class="allocator-pills"><span class="allocator-pill">glibc-2.28</span><span class="allocator-pill">mimalloc-2.2.7</span><span class="allocator-pill">jemalloc-5.2.1</span><span class="allocator-pill">jemalloc-5.3.0</span><span class="allocator-pill">tcmalloc-2.9.1</span></div>
+      </section>
+
+          </div>
+        </section>
+
+      </article>
+
+      <article class="run-card">
+        <div class="run-card-header">
+          <div class="run-title-row">
             <h3>full_alloc_2h_innodb_20260310_024730</h3>
             <span class="engine-badge engine-badge--innodb">InnoDB</span>
           </div>
@@ -552,100 +586,11 @@
         <div class="allocator-pills"><span class="allocator-pill">jemalloc-5.2.1</span><span class="allocator-pill">jemalloc-5.3.0</span></div>
       </section>
 
-                
       <section class="allocator-group allocator-group--decay">
         <p class="allocator-group-label">Decay values</p>
         <div class="allocator-pills"><span class="allocator-pill">500 ms</span><span class="allocator-pill">1500 ms</span><span class="allocator-pill">3000 ms</span><span class="allocator-pill">6000 ms</span></div>
       </section>
 
-                
-      <section class="allocator-group allocator-group--background">
-        <p class="allocator-group-label">Background</p>
-        <div class="allocator-pills"><span class="allocator-pill">On</span><span class="allocator-pill">Off</span></div>
-      </section>
-
-              </div>
-            </section>
-          </div>
-        </section>
-
-      </article>
-
-      <article class="run-card">
-        <div class="run-card-header">
-          <div class="run-title-row">
-            <h3>full_alloc_2h_rocksdb_20260304_232646</h3>
-            <span class="engine-badge engine-badge--rocksdb">RocksDB</span>
-          </div>
-          <div class="run-card-actions">
-            <p class="run-test-date">2026-03-04 23:26:46</p>
-            <a class="run-link" href="runs/full_alloc_2h_rocksdb_20260304_232646/index.html">Open</a>
-          </div>
-        </div>
-        
-        <section class="allocator-panel">
-          <div class="allocator-header">
-            <p class="allocator-kicker">Allocator coverage</p>
-          </div>
-          <div class="coverage-board">
-            <section class="coverage-card coverage-card--workload">
-              <div class="coverage-bar">
-                <h4 class="coverage-section-title">Workload comparison</h4>
-                <span class="coverage-stat">
-                  5 allocators
-                </span>
-              </div>
-              
-      <section class="allocator-group allocator-group--workload">
-        <p class="allocator-group-label">Allocators</p>
-        <div class="allocator-pills"><span class="allocator-pill">glibc-2.28</span><span class="allocator-pill">mimalloc-2.2.7</span><span class="allocator-pill">jemalloc-5.2.1</span><span class="allocator-pill">jemalloc-5.3.0</span><span class="allocator-pill">tcmalloc-2.9.1</span></div>
-      </section>
-
-            </section>
-            <section class="coverage-card coverage-card--matrix">
-              <div class="coverage-bar">
-                <h4 class="coverage-section-title">jemalloc matrix</h4>
-                <span class="coverage-stat">
-                  16 combos
-                </span>
-              </div>
-              
-          <div class="matrix-equation">
-            <div class="matrix-metric">
-              <span class="matrix-metric-value">2</span>
-              <span class="matrix-metric-label">jemalloc versions</span>
-            </div>
-            <span class="matrix-operator">x</span>
-            <div class="matrix-metric">
-              <span class="matrix-metric-value">4</span>
-              <span class="matrix-metric-label">decay values</span>
-            </div>
-            <span class="matrix-operator">x</span>
-            <div class="matrix-metric">
-              <span class="matrix-metric-value">2</span>
-              <span class="matrix-metric-label">background modes</span>
-            </div>
-            <span class="matrix-operator">=</span>
-            <div class="matrix-metric matrix-metric--total">
-              <span class="matrix-metric-value">16</span>
-              <span class="matrix-metric-label">matrix combinations</span>
-            </div>
-          </div>
-
-              <div class="matrix-detail-grid">
-                
-      <section class="allocator-group allocator-group--version">
-        <p class="allocator-group-label">Versions</p>
-        <div class="allocator-pills"><span class="allocator-pill">jemalloc-5.2.1</span><span class="allocator-pill">jemalloc-5.3.0</span></div>
-      </section>
-
-                
-      <section class="allocator-group allocator-group--decay">
-        <p class="allocator-group-label">Decay values</p>
-        <div class="allocator-pills"><span class="allocator-pill">500 ms</span><span class="allocator-pill">1500 ms</span><span class="allocator-pill">3000 ms</span><span class="allocator-pill">6000 ms</span></div>
-      </section>
-
-                
       <section class="allocator-group allocator-group--background">
         <p class="allocator-group-label">Background</p>
         <div class="allocator-pills"><span class="allocator-pill">On</span><span class="allocator-pill">Off</span></div>
@@ -671,6 +616,12 @@
           </tr>
         </thead>
         <tbody>
+        <tr>
+          <td><a href="runs/full_alloc_2h_innodb_20260312_021038/index.html">full_alloc_2h_innodb_20260312_021038</a></td>
+          <td>2026-03-12 02:10:38</td>
+          <td>Workload comparison: 5 allocators</td>
+        </tr>
+
         <tr>
           <td><a href="runs/full_alloc_2h_innodb_20260310_024730/index.html">full_alloc_2h_innodb_20260310_024730</a></td>
           <td>2026-03-10 02:47:30</td>

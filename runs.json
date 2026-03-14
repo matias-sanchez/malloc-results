@@ -1,6 +1,7 @@
 [
   {
     "allocator_summary": {
+      "aggressive_decommit_modes": [],
       "background_thread_modes": [],
       "base_allocators": [
         "glibc-2.28",
@@ -14,7 +15,44 @@
       "matrix_versions": [],
       "mode": "comparison",
       "overview": "Workload comparison: 5 allocators",
-      "tested_combinations": 0
+      "release_rates": [],
+      "tested_combinations": 0,
+      "thread_cache_bytes": []
+    },
+    "allocators": [
+      "glibc-2.28",
+      "mimalloc-2.2.7",
+      "jemalloc-5.2.1",
+      "jemalloc-5.3.0",
+      "tcmalloc-2.9.1"
+    ],
+    "chart_count": 10,
+    "git_rev": "",
+    "published_at_utc": "2026-03-12 05:11:01 UTC",
+    "run_id": "full_alloc_2h_innodb_20260312_021038",
+    "storage_engine": "InnoDB",
+    "test_date": "2026-03-12 02:10:38",
+    "url": "runs/full_alloc_2h_innodb_20260312_021038/index.html"
+  },
+  {
+    "allocator_summary": {
+      "aggressive_decommit_modes": [],
+      "background_thread_modes": [],
+      "base_allocators": [
+        "glibc-2.28",
+        "mimalloc-2.2.7",
+        "jemalloc-5.2.1",
+        "jemalloc-5.3.0",
+        "tcmalloc-2.9.1"
+      ],
+      "decay_ms": [],
+      "matrix_family_label": "allocator",
+      "matrix_versions": [],
+      "mode": "comparison",
+      "overview": "Workload comparison: 5 allocators",
+      "release_rates": [],
+      "tested_combinations": 0,
+      "thread_cache_bytes": []
     },
     "allocators": [
       "glibc-2.28",
@@ -25,7 +63,7 @@
     ],
     "chart_count": 9,
     "git_rev": "",
-    "published_at_utc": "2026-03-11 03:35:50 UTC",
+    "published_at_utc": "2026-03-10 05:47:50 UTC",
     "run_id": "full_alloc_2h_innodb_20260310_024730",
     "storage_engine": "InnoDB",
     "test_date": "2026-03-10 02:47:30",
@@ -33,6 +71,7 @@
   },
   {
     "allocator_summary": {
+      "aggressive_decommit_modes": [],
       "background_thread_modes": [
         "on",
         "off"
@@ -57,7 +96,9 @@
       ],
       "mode": "matrix",
       "overview": "Workload: 5 allocators + jemalloc matrix: 2 versions x 4 decay values x 2 background modes = 16 combinations",
-      "tested_combinations": 16
+      "release_rates": [],
+      "tested_combinations": 16,
+      "thread_cache_bytes": []
     },
     "allocators": [
       "glibc-2.28",
@@ -84,7 +125,7 @@
     ],
     "chart_count": 27,
     "git_rev": "",
-    "published_at_utc": "2026-03-11 03:35:49 UTC",
+    "published_at_utc": "2026-03-07 06:17:48 UTC",
     "run_id": "full_alloc_2h_innodb_20260307_031727",
     "storage_engine": "InnoDB",
     "test_date": "2026-03-07 03:17:27",
@@ -92,6 +133,7 @@
   },
   {
     "allocator_summary": {
+      "aggressive_decommit_modes": [],
       "background_thread_modes": [
         "on",
         "off"
@@ -116,7 +158,9 @@
       ],
       "mode": "matrix",
       "overview": "Workload: 5 allocators + jemalloc matrix: 2 versions x 4 decay values x 2 background modes = 16 combinations",
-      "tested_combinations": 16
+      "release_rates": [],
+      "tested_combinations": 16,
+      "thread_cache_bytes": []
     },
     "allocators": [
       "glibc-2.28",
@@ -143,7 +187,7 @@
     ],
     "chart_count": 27,
     "git_rev": "",
-    "published_at_utc": "2026-03-11 03:35:50 UTC",
+    "published_at_utc": "2026-03-05 02:27:10 UTC",
     "run_id": "full_alloc_2h_rocksdb_20260304_232646",
     "storage_engine": "RocksDB",
     "test_date": "2026-03-04 23:26:46",

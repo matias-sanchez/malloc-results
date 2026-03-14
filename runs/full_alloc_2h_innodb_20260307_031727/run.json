@@ -1,5 +1,6 @@
 {
   "allocator_summary": {
+    "aggressive_decommit_modes": [],
     "background_thread_modes": [
       "on",
       "off"
@@ -24,7 +25,9 @@
     ],
     "mode": "matrix",
     "overview": "Workload: 5 allocators + jemalloc matrix: 2 versions x 4 decay values x 2 background modes = 16 combinations",
-    "tested_combinations": 16
+    "release_rates": [],
+    "tested_combinations": 16,
+    "thread_cache_bytes": []
   },
   "allocators": [
     "glibc-2.28",
@@ -51,7 +54,7 @@
   ],
   "chart_count": 27,
   "git_rev": "",
-  "published_at_utc": "2026-03-11 03:35:49 UTC",
+  "published_at_utc": "2026-03-07 06:17:48 UTC",
   "run_id": "full_alloc_2h_innodb_20260307_031727",
   "storage_engine": "InnoDB",
   "test_date": "2026-03-07 03:17:27",

@@ -1,5 +1,6 @@
 {
   "allocator_summary": {
+    "aggressive_decommit_modes": [],
     "background_thread_modes": [],
     "base_allocators": [
       "glibc-2.28",
@@ -13,7 +14,9 @@
     "matrix_versions": [],
     "mode": "comparison",
     "overview": "Workload comparison: 5 allocators",
-    "tested_combinations": 0
+    "release_rates": [],
+    "tested_combinations": 0,
+    "thread_cache_bytes": []
   },
   "allocators": [
     "glibc-2.28",
@@ -24,7 +27,7 @@
   ],
   "chart_count": 9,
   "git_rev": "",
-  "published_at_utc": "2026-03-11 03:35:50 UTC",
+  "published_at_utc": "2026-03-10 05:47:50 UTC",
   "run_id": "full_alloc_2h_innodb_20260310_024730",
   "storage_engine": "InnoDB",
   "test_date": "2026-03-10 02:47:30",
