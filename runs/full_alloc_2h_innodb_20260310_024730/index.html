@@ -62,6 +62,16 @@
       font-weight: 700;
     }
 
+    .home-link {
+      text-decoration: none;
+      transition: opacity 120ms ease, transform 120ms ease;
+    }
+
+    .home-link:hover {
+      opacity: 0.88;
+      transform: translateY(-1px);
+    }
+
     .title-row {
       display: flex;
       align-items: baseline;
@@ -438,7 +448,7 @@
 <body>
   <div class="page">
     <div class="topbar">
-      <p class="kicker">Malloc Tests V2</p>
+      <a class="kicker home-link" href="../../index.html">Malloc Results</a>
       <div class="title-row">
         <h1>Plots Navigator</h1>
         <span class="run-id">full_alloc_2h_innodb_20260310_024730</span>
@@ -455,7 +465,7 @@
       <aside class="sidebar">
         <div class="sidebar-head">
           <div class="sidebar-copy">
-            <p class="sidebar-kicker">Navigator</p>
+            <a class="sidebar-kicker home-link" href="../../index.html">Malloc Results</a>
             <h2 class="sidebar-title">Chart Browser</h2>
           </div>
           <button
