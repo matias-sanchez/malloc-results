@@ -1,6 +1,72 @@
 [
   {
     "allocator_summary": {
+      "aggressive_decommit_modes": [
+        "false",
+        "true"
+      ],
+      "background_thread_modes": [
+        "cache32m",
+        "cache16m",
+        "cache64m"
+      ],
+      "base_allocators": [],
+      "decay_ms": [],
+      "matrix_family_label": "tcmalloc",
+      "matrix_versions": [
+        "tcmalloc-2.9.1"
+      ],
+      "mode": "matrix",
+      "overview": "Workload: 0 allocators + tcmalloc matrix: 1 version x 4 release rates x 3 thread-cache sizes x 2 decommit modes = 24 combinations",
+      "release_rates": [
+        1,
+        2,
+        4,
+        8
+      ],
+      "tested_combinations": 24,
+      "thread_cache_bytes": [
+        16777216,
+        33554432,
+        67108864
+      ]
+    },
+    "allocators": [
+      "tcmalloc-2.9.1/release1/cache32m/decommitfalse",
+      "tcmalloc-2.9.1/release1/cache32m/decommittrue",
+      "tcmalloc-2.9.1/release1/cache16m/decommitfalse",
+      "tcmalloc-2.9.1/release1/cache16m/decommittrue",
+      "tcmalloc-2.9.1/release1/cache64m/decommitfalse",
+      "tcmalloc-2.9.1/release1/cache64m/decommittrue",
+      "tcmalloc-2.9.1/release2/cache32m/decommitfalse",
+      "tcmalloc-2.9.1/release2/cache32m/decommittrue",
+      "tcmalloc-2.9.1/release2/cache16m/decommitfalse",
+      "tcmalloc-2.9.1/release2/cache16m/decommittrue",
+      "tcmalloc-2.9.1/release2/cache64m/decommitfalse",
+      "tcmalloc-2.9.1/release2/cache64m/decommittrue",
+      "tcmalloc-2.9.1/release4/cache32m/decommitfalse",
+      "tcmalloc-2.9.1/release4/cache32m/decommittrue",
+      "tcmalloc-2.9.1/release4/cache16m/decommitfalse",
+      "tcmalloc-2.9.1/release4/cache16m/decommittrue",
+      "tcmalloc-2.9.1/release4/cache64m/decommitfalse",
+      "tcmalloc-2.9.1/release4/cache64m/decommittrue",
+      "tcmalloc-2.9.1/release8/cache32m/decommitfalse",
+      "tcmalloc-2.9.1/release8/cache32m/decommittrue",
+      "tcmalloc-2.9.1/release8/cache16m/decommitfalse",
+      "tcmalloc-2.9.1/release8/cache16m/decommittrue",
+      "tcmalloc-2.9.1/release8/cache64m/decommitfalse",
+      "tcmalloc-2.9.1/release8/cache64m/decommittrue"
+    ],
+    "chart_count": 10,
+    "git_rev": "",
+    "published_at_utc": "2026-03-14 04:28:25 UTC",
+    "run_id": "tcmalloc_matrix_2h_innodb_20260314_012804",
+    "storage_engine": "InnoDB",
+    "test_date": "2026-03-14 01:28:04",
+    "url": "runs/tcmalloc_matrix_2h_innodb_20260314_012804/index.html"
+  },
+  {
+    "allocator_summary": {
       "aggressive_decommit_modes": [],
       "background_thread_modes": [],
       "base_allocators": [
@@ -33,6 +99,41 @@
     "storage_engine": "InnoDB",
     "test_date": "2026-03-12 02:10:38",
     "url": "runs/full_alloc_2h_innodb_20260312_021038/index.html"
+  },
+  {
+    "allocator_summary": {
+      "aggressive_decommit_modes": [],
+      "background_thread_modes": [],
+      "base_allocators": [
+        "glibc-2.28",
+        "mimalloc-2.2.7",
+        "jemalloc-5.2.1",
+        "jemalloc-5.3.0",
+        "tcmalloc-2.9.1"
+      ],
+      "decay_ms": [],
+      "matrix_family_label": "allocator",
+      "matrix_versions": [],
+      "mode": "comparison",
+      "overview": "Workload comparison: 5 allocators",
+      "release_rates": [],
+      "tested_combinations": 0,
+      "thread_cache_bytes": []
+    },
+    "allocators": [
+      "glibc-2.28",
+      "mimalloc-2.2.7",
+      "jemalloc-5.2.1",
+      "jemalloc-5.3.0",
+      "tcmalloc-2.9.1"
+    ],
+    "chart_count": 10,
+    "git_rev": "",
+    "published_at_utc": "2026-03-10 20:54:39 UTC",
+    "run_id": "full_alloc_2h_innodb_20260310_175416",
+    "storage_engine": "InnoDB",
+    "test_date": "2026-03-10 17:54:16",
+    "url": "runs/full_alloc_2h_innodb_20260310_175416/index.html"
   },
   {
     "allocator_summary": {
