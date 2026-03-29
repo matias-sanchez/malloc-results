@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Workload Summary Kpi Comparison</title>
+  <script src="plotly.min.js"></script>
+  <style>
+    :root {
+      --line: #d1d5db;
+      --panel: #ffffff;
+      --accent: #0f766e;
+      --ink: #111827;
+      --muted: #4b5563;
+      --bg: #f8fafc;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+    }
+    .page {
+      padding: 18px;
+      display: grid;
+      gap: 14px;
+    }
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.06);
+    }
+    .chart {
+      padding: 8px 10px 2px;
+    }
+    #chart {
+      min-height: 620px;
+    }
+    .stats-panel {
+      padding: 10px;
+    }
+    .empty {
+      color: #b91c1c;
+      font-weight: 600;
+      font-size: 13px;
+    }
+    
+    .table-wrap {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+      padding: 8px 10px;
+      overflow: auto;
+      max-height: 320px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    th, td {
+      padding: 7px 8px;
+      border-bottom: 1px solid #e5e7eb;
+      text-align: right;
+      white-space: nowrap;
+    }
+    th:first-child, td:first-child {
+      text-align: left;
+    }
+    th {
+      position: sticky;
+      top: 0;
+      background: #f9fafb;
+      z-index: 1;
+    }
+    .sort-button {
+      width: 100%;
+      border: 0;
+      background: transparent;
+      padding: 0;
+      font: inherit;
+      color: inherit;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 6px;
+    }
+    th:first-child .sort-button {
+      justify-content: flex-start;
+    }
+    .sort-indicator::before {
+      content: "↕";
+      color: #94a3b8;
+      font-size: 12px;
+    }
+    th[aria-sort="ascending"] .sort-indicator::before {
+      content: "▲";
+      color: var(--accent);
+    }
+    th[aria-sort="descending"] .sort-indicator::before {
+      content: "▼";
+      color: var(--accent);
+    }
+    
+  </style>
+</head>
+<body>
+  <div class="page">
+    <section class="panel chart">
+      <div id="chart"></div>
+    </section>
+    <section class="panel stats-panel">
+      <div class="table-wrap">
+        <table id="statsTable">
+          <thead id="statsHeader">
+            <tr><th scope="col" data-sort-key="name" data-default-direction="asc" aria-sort="none"><button type="button" class="sort-button">Series<span class="sort-indicator" aria-hidden="true"></span></button></th><th scope="col" data-sort-key="samples" data-default-direction="desc" aria-sort="none"><button type="button" class="sort-button">Samples<span class="sort-indicator" aria-hidden="true"></span></button></th><th scope="col" data-sort-key="average" data-default-direction="desc" aria-sort="none"><button type="button" class="sort-button">Average<span class="sort-indicator" aria-hidden="true"></span></button></th><th scope="col" data-sort-key="p95" data-default-direction="desc" aria-sort="none"><button type="button" class="sort-button">P95<span class="sort-indicator" aria-hidden="true"></span></button></th><th scope="col" data-sort-key="min" data-default-direction="asc" aria-sort="none"><button type="button" class="sort-button">Min<span class="sort-indicator" aria-hidden="true"></span></button></th><th scope="col" data-sort-key="max" data-default-direction="desc" aria-sort="none"><button type="button" class="sort-button">Max<span class="sort-indicator" aria-hidden="true"></span></button></th><th scope="col" data-sort-key="last" data-default-direction="desc" aria-sort="none"><button type="button" class="sort-button">Last<span class="sort-indicator" aria-hidden="true"></span></button></th></tr>
+          </thead>
+          <tbody id="statsBody"></tbody>
+        </table>
+        <div id="emptyMessage" class="empty" style="display:none;">No numeric points available.</div>
+      </div>
+    </section>
+  </div>
+  <script>
+    const figure = {"data":[{"marker":{"color":["#2ca02c","#7f7f7f","#1f77b4","#8c564b","#8c564b","#1f77b4","#d62728","#bcbd22","#ff7f0e","#e377c2","#e377c2","#ff7f0e","#8c564b","#1f77b4","#d62728","#bcbd22","#bcbd22","#d62728","#17becf","#9467bd","#7f7f7f","#2ca02c","#2ca02c","#7f7f7f"]},"showlegend":false,"x":["tcmalloc-2.9.1/release1/cache16m/decommitfalse","tcmalloc-2.9.1/release1/cache16m/decommittrue","tcmalloc-2.9.1/release1/cache32m/decommitfalse","tcmalloc-2.9.1/release1/cache32m/decommittrue","tcmalloc-2.9.1/release1/cache64m/decommitfalse","tcmalloc-2.9.1/release1/cache64m/decommittrue","tcmalloc-2.9.1/release2/cache16m/decommitfalse","tcmalloc-2.9.1/release2/cache16m/decommittrue","tcmalloc-2.9.1/release2/cache32m/decommitfalse","tcmalloc-2.9.1/release2/cache32m/decommittrue","tcmalloc-2.9.1/release2/cache64m/decommitfalse","tcmalloc-2.9.1/release2/cache64m/decommittrue","tcmalloc-2.9.1/release4/cache16m/decommitfalse","tcmalloc-2.9.1/release4/cache16m/decommittrue","tcmalloc-2.9.1/release4/cache32m/decommitfalse","tcmalloc-2.9.1/release4/cache32m/decommittrue","tcmalloc-2.9.1/release4/cache64m/decommitfalse","tcmalloc-2.9.1/release4/cache64m/decommittrue","tcmalloc-2.9.1/release8/cache16m/decommitfalse","tcmalloc-2.9.1/release8/cache16m/decommittrue","tcmalloc-2.9.1/release8/cache32m/decommitfalse","tcmalloc-2.9.1/release8/cache32m/decommittrue","tcmalloc-2.9.1/release8/cache64m/decommitfalse","tcmalloc-2.9.1/release8/cache64m/decommittrue"],"y":[2615.73,2637.5299999999997,2591.33,2562.42,2708.55,2720.4300000000003,2725.73,2688.1,2766.28,2671.99,2785.7299999999996,2737.42,2728.01,2654.67,2799.9500000000003,2725.61,2678.17,2758.23,2735.59,2705.3599999999997,2792.8900000000003,2775.12,2789.06,2750.31],"type":"bar","xaxis":"x","yaxis":"y"},{"marker":{"color":["#2ca02c","#7f7f7f","#1f77b4","#8c564b","#8c564b","#1f77b4","#d62728","#bcbd22","#ff7f0e","#e377c2","#e377c2","#ff7f0e","#8c564b","#1f77b4","#d62728","#bcbd22","#bcbd22","#d62728","#17becf","#9467bd","#7f7f7f","#2ca02c","#2ca02c","#7f7f7f"]},"showlegend":false,"x":["tcmalloc-2.9.1/release1/cache16m/decommitfalse","tcmalloc-2.9.1/release1/cache16m/decommittrue","tcmalloc-2.9.1/release1/cache32m/decommitfalse","tcmalloc-2.9.1/release1/cache32m/decommittrue","tcmalloc-2.9.1/release1/cache64m/decommitfalse","tcmalloc-2.9.1/release1/cache64m/decommittrue","tcmalloc-2.9.1/release2/cache16m/decommitfalse","tcmalloc-2.9.1/release2/cache16m/decommittrue","tcmalloc-2.9.1/release2/cache32m/decommitfalse","tcmalloc-2.9.1/release2/cache32m/decommittrue","tcmalloc-2.9.1/release2/cache64m/decommitfalse","tcmalloc-2.9.1/release2/cache64m/decommittrue","tcmalloc-2.9.1/release4/cache16m/decommitfalse","tcmalloc-2.9.1/release4/cache16m/decommittrue","tcmalloc-2.9.1/release4/cache32m/decommitfalse","tcmalloc-2.9.1/release4/cache32m/decommittrue","tcmalloc-2.9.1/release4/cache64m/decommitfalse","tcmalloc-2.9.1/release4/cache64m/decommittrue","tcmalloc-2.9.1/release8/cache16m/decommitfalse","tcmalloc-2.9.1/release8/cache16m/decommittrue","tcmalloc-2.9.1/release8/cache32m/decommitfalse","tcmalloc-2.9.1/release8/cache32m/decommittrue","tcmalloc-2.9.1/release8/cache64m/decommitfalse","tcmalloc-2.9.1/release8/cache64m/decommittrue"],"y":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],"type":"bar","xaxis":"x2","yaxis":"y2"},{"marker":{"color":["#2ca02c","#7f7f7f","#1f77b4","#8c564b","#8c564b","#1f77b4","#d62728","#bcbd22","#ff7f0e","#e377c2","#e377c2","#ff7f0e","#8c564b","#1f77b4","#d62728","#bcbd22","#bcbd22","#d62728","#17becf","#9467bd","#7f7f7f","#2ca02c","#2ca02c","#7f7f7f"]},"showlegend":false,"x":["tcmalloc-2.9.1/release1/cache16m/decommitfalse","tcmalloc-2.9.1/release1/cache16m/decommittrue","tcmalloc-2.9.1/release1/cache32m/decommitfalse","tcmalloc-2.9.1/release1/cache32m/decommittrue","tcmalloc-2.9.1/release1/cache64m/decommitfalse","tcmalloc-2.9.1/release1/cache64m/decommittrue","tcmalloc-2.9.1/release2/cache16m/decommitfalse","tcmalloc-2.9.1/release2/cache16m/decommittrue","tcmalloc-2.9.1/release2/cache32m/decommitfalse","tcmalloc-2.9.1/release2/cache32m/decommittrue","tcmalloc-2.9.1/release2/cache64m/decommitfalse","tcmalloc-2.9.1/release2/cache64m/decommittrue","tcmalloc-2.9.1/release4/cache16m/decommitfalse","tcmalloc-2.9.1/release4/cache16m/decommittrue","tcmalloc-2.9.1/release4/cache32m/decommitfalse","tcmalloc-2.9.1/release4/cache32m/decommittrue","tcmalloc-2.9.1/release4/cache64m/decommitfalse","tcmalloc-2.9.1/release4/cache64m/decommittrue","tcmalloc-2.9.1/release8/cache16m/decommitfalse","tcmalloc-2.9.1/release8/cache16m/decommittrue","tcmalloc-2.9.1/release8/cache32m/decommitfalse","tcmalloc-2.9.1/release8/cache32m/decommittrue","tcmalloc-2.9.1/release8/cache64m/decommitfalse","tcmalloc-2.9.1/release8/cache64m/decommittrue"],"y":[51.370792388916016,44.16013717651367,52.508697509765625,44.15478515625,52.24302291870117,44.16879653930664,51.663536071777344,44.14802932739258,52.18561935424805,44.164894104003906,52.679969787597656,44.16425323486328,51.99452209472656,44.1485595703125,52.54810333251953,44.15576934814453,51.909828186035156,44.16127014160156,52.540645599365234,44.147491455078125,51.866329193115234,44.15657424926758,51.94350051879883,44.156837463378906],"type":"bar","xaxis":"x3","yaxis":"y3"},{"marker":{"color":["#2ca02c","#7f7f7f","#1f77b4","#8c564b","#8c564b","#1f77b4","#d62728","#bcbd22","#ff7f0e","#e377c2","#e377c2","#ff7f0e","#8c564b","#1f77b4","#d62728","#bcbd22","#bcbd22","#d62728","#17becf","#9467bd","#7f7f7f","#2ca02c","#2ca02c","#7f7f7f"]},"showlegend":false,"x":["tcmalloc-2.9.1/release1/cache16m/decommitfalse","tcmalloc-2.9.1/release1/cache16m/decommittrue","tcmalloc-2.9.1/release1/cache32m/decommitfalse","tcmalloc-2.9.1/release1/cache32m/decommittrue","tcmalloc-2.9.1/release1/cache64m/decommitfalse","tcmalloc-2.9.1/release1/cache64m/decommittrue","tcmalloc-2.9.1/release2/cache16m/decommitfalse","tcmalloc-2.9.1/release2/cache16m/decommittrue","tcmalloc-2.9.1/release2/cache32m/decommitfalse","tcmalloc-2.9.1/release2/cache32m/decommittrue","tcmalloc-2.9.1/release2/cache64m/decommitfalse","tcmalloc-2.9.1/release2/cache64m/decommittrue","tcmalloc-2.9.1/release4/cache16m/decommitfalse","tcmalloc-2.9.1/release4/cache16m/decommittrue","tcmalloc-2.9.1/release4/cache32m/decommitfalse","tcmalloc-2.9.1/release4/cache32m/decommittrue","tcmalloc-2.9.1/release4/cache64m/decommitfalse","tcmalloc-2.9.1/release4/cache64m/decommittrue","tcmalloc-2.9.1/release8/cache16m/decommitfalse","tcmalloc-2.9.1/release8/cache16m/decommittrue","tcmalloc-2.9.1/release8/cache32m/decommitfalse","tcmalloc-2.9.1/release8/cache32m/decommittrue","tcmalloc-2.9.1/release8/cache64m/decommitfalse","tcmalloc-2.9.1/release8/cache64m/decommittrue"],"y":[0.003589630126953125,0.11138153076171875,0.006572723388671875,0.11542510986328125,0.00365447998046875,0.1162109375,0.00363922119140625,0.10747146606445312,0.005168914794921875,0.11671829223632812,0.007137298583984375,0.12297439575195312,0.014575958251953125,0.1077423095703125,0.004444122314453125,0.1191558837890625,0.00966644287109375,0.115692138671875,0.00533294677734375,0.1082000732421875,0.022808074951171875,0.1169891357421875,0.0053253173828125,0.11642074584960938],"type":"bar","xaxis":"x4","yaxis":"y4"}],"layout":{"template":{"data":{"barpolar":[{"marker":{"line":{"color":"white","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"white","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"#C8D4E3","linecolor":"#C8D4E3","minorgridcolor":"#C8D4E3","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"#C8D4E3","linecolor":"#C8D4E3","minorgridcolor":"#C8D4E3","startlinecolor":"#2a3f5f"},"type":"carpet"}],"choropleth":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"choropleth"}],"contourcarpet":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"contourcarpet"}],"contour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"contour"}],"heatmap":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"heatmap"}],"histogram2dcontour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2dcontour"}],"histogram2d":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2d"}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"mesh3d":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"mesh3d"}],"parcoords":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"parcoords"}],"pie":[{"automargin":true,"type":"pie"}],"scatter3d":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatter3d"}],"scattercarpet":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattercarpet"}],"scattergeo":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergeo"}],"scattergl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergl"}],"scattermapbox":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattermapbox"}],"scattermap":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattermap"}],"scatterpolargl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolargl"}],"scatterpolar":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolar"}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"scatterternary":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterternary"}],"surface":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"surface"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}]},"layout":{"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"autotypenumbers":"strict","coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]],"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]},"colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"geo":{"bgcolor":"white","lakecolor":"white","landcolor":"white","showlakes":true,"showland":true,"subunitcolor":"#C8D4E3"},"hoverlabel":{"align":"left"},"hovermode":"closest","mapbox":{"style":"light"},"paper_bgcolor":"white","plot_bgcolor":"white","polar":{"angularaxis":{"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":""},"bgcolor":"white","radialaxis":{"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":""}},"scene":{"xaxis":{"backgroundcolor":"white","gridcolor":"#DFE8F3","gridwidth":2,"linecolor":"#EBF0F8","showbackground":true,"ticks":"","zerolinecolor":"#EBF0F8"},"yaxis":{"backgroundcolor":"white","gridcolor":"#DFE8F3","gridwidth":2,"linecolor":"#EBF0F8","showbackground":true,"ticks":"","zerolinecolor":"#EBF0F8"},"zaxis":{"backgroundcolor":"white","gridcolor":"#DFE8F3","gridwidth":2,"linecolor":"#EBF0F8","showbackground":true,"ticks":"","zerolinecolor":"#EBF0F8"}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"ternary":{"aaxis":{"gridcolor":"#DFE8F3","linecolor":"#A2B1C6","ticks":""},"baxis":{"gridcolor":"#DFE8F3","linecolor":"#A2B1C6","ticks":""},"bgcolor":"white","caxis":{"gridcolor":"#DFE8F3","linecolor":"#A2B1C6","ticks":""}},"title":{"x":0.05},"xaxis":{"automargin":true,"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":"","title":{"standoff":15},"zerolinecolor":"#EBF0F8","zerolinewidth":2},"yaxis":{"automargin":true,"gridcolor":"#EBF0F8","linecolor":"#EBF0F8","ticks":"","title":{"standoff":15},"zerolinecolor":"#EBF0F8","zerolinewidth":2}}},"xaxis":{"anchor":"y","domain":[0.0,0.44],"title":{"text":"Allocator"}},"yaxis":{"anchor":"x","domain":[0.5900000000000001,1.0],"title":{"text":"QPS"}},"xaxis2":{"anchor":"y2","domain":[0.56,1.0],"title":{"text":"Allocator"}},"yaxis2":{"anchor":"x2","domain":[0.5900000000000001,1.0],"title":{"text":"Milliseconds"}},"xaxis3":{"anchor":"y3","domain":[0.0,0.44],"title":{"text":"Allocator"}},"yaxis3":{"anchor":"x3","domain":[0.0,0.41000000000000003],"title":{"text":"GB"}},"xaxis4":{"anchor":"y4","domain":[0.56,1.0],"title":{"text":"Allocator"}},"yaxis4":{"anchor":"x4","domain":[0.0,0.41000000000000003],"title":{"text":"GB"}},"annotations":[{"font":{"size":16},"showarrow":false,"text":"Combined QPS (custom + sysbench)","x":0.22,"xanchor":"center","xref":"paper","y":1.0,"yanchor":"bottom","yref":"paper"},{"font":{"size":16},"showarrow":false,"text":"Custom-load p95 latency (ms)","x":0.78,"xanchor":"center","xref":"paper","y":1.0,"yanchor":"bottom","yref":"paper"},{"font":{"size":16},"showarrow":false,"text":"Peak RSS during workload (GB)","x":0.22,"xanchor":"center","xref":"paper","y":0.41000000000000003,"yanchor":"bottom","yref":"paper"},{"font":{"size":16},"showarrow":false,"text":"RSS delta during workload (GB)","x":0.78,"xanchor":"center","xref":"paper","y":0.41000000000000003,"yanchor":"bottom","yref":"paper"}],"title":{"text":"Workload KPI comparison (run: sysbench_join_2h_tcmalloc_matrix_5m_20260323_022356)"},"width":1400,"height":900}};
+    const statsRows = [{"name":"Trace 1","samples":24,"average":2712.6754166666665,"p95":2792.3155,"min":2562.42,"max":2799.9500000000003,"last":2750.31},{"name":"Trace 2","samples":24,"average":0.0,"p95":0.0,"min":0.0,"max":0.0,"last":0.0},{"name":"Trace 3","samples":24,"average":48.139248530069985,"p95":52.54698467254639,"min":44.147491455078125,"max":52.679969787597656,"last":44.156837463378906},{"name":"Trace 4","samples":24,"average":0.0610957145690918,"p95":0.11883087158203125,"min":0.003589630126953125,"max":0.12297439575195312,"last":0.11642074584960938}];
+    const statsColumns = [{"key":"name","label":"Series","type":"text","default_direction":"asc"},{"key":"samples","label":"Samples","type":"integer","default_direction":"desc"},{"key":"average","label":"Average","type":"number","default_direction":"desc"},{"key":"p95","label":"P95","type":"number","default_direction":"desc"},{"key":"min","label":"Min","type":"number","default_direction":"asc"},{"key":"max","label":"Max","type":"number","default_direction":"desc"},{"key":"last","label":"Last","type":"number","default_direction":"desc"}];
+    
+    function formatSortableNumber(value, kind) {
+      if (value === null || value === undefined || Number.isNaN(value)) return "-";
+      if (kind === "integer") return Math.round(value).toLocaleString();
+      const abs = Math.abs(value);
+      if (abs >= 1000) return value.toLocaleString(undefined, { maximumFractionDigits: 2 });
+      if (abs >= 1) return value.toFixed(2);
+      return value.toFixed(6);
+    }
+
+    function createSortableStatsTable(config) {
+      const header = document.getElementById(config.headerId);
+      const body = document.getElementById(config.bodyId);
+      const empty = config.emptyId ? document.getElementById(config.emptyId) : null;
+      const columns = Array.isArray(config.columns) ? config.columns : [];
+      const columnsByKey = new Map(columns.map((column) => [column.key, column]));
+      let rows = [];
+      let sortKey = config.defaultSortKey || (columns[0] && columns[0].key) || "name";
+      let sortDirection = (config.defaultSortDirection || "asc").toLowerCase() === "desc"
+        ? "desc"
+        : "asc";
+
+      function defaultDirectionFor(key) {
+        const column = columnsByKey.get(key);
+        if (!column) return "asc";
+        return (column.default_direction || (column.type === "text" ? "asc" : "desc")).toLowerCase() === "asc"
+          ? "asc"
+          : "desc";
+      }
+
+      function compareValues(left, right, column) {
+        if (column.type === "text") {
+          const leftText = String(left ?? "").toLocaleLowerCase();
+          const rightText = String(right ?? "").toLocaleLowerCase();
+          if (leftText < rightText) return -1;
+          if (leftText > rightText) return 1;
+          return 0;
+        }
+        const leftNumber = Number.isFinite(left) ? left : null;
+        const rightNumber = Number.isFinite(right) ? right : null;
+        if (leftNumber === null && rightNumber === null) return 0;
+        if (leftNumber === null) return 1;
+        if (rightNumber === null) return -1;
+        return leftNumber - rightNumber;
+      }
+
+      function sortedRows() {
+        const column = columnsByKey.get(sortKey) || columns[0] || { key: "name", type: "text" };
+        const multiplier = sortDirection === "asc" ? 1 : -1;
+        return [...rows].sort((left, right) => {
+          const comparison = compareValues(left[column.key], right[column.key], column);
+          if (comparison !== 0) return comparison * multiplier;
+          return String(left.name ?? "").localeCompare(String(right.name ?? ""));
+        });
+      }
+
+      function updateHeaderState() {
+        header.querySelectorAll("[data-sort-key]").forEach((cell) => {
+          const active = cell.getAttribute("data-sort-key") === sortKey;
+          cell.setAttribute(
+            "aria-sort",
+            active ? (sortDirection === "asc" ? "ascending" : "descending") : "none"
+          );
+        });
+      }
+
+      function render() {
+        const orderedRows = sortedRows();
+        body.innerHTML = "";
+        for (const row of orderedRows) {
+          const tr = document.createElement("tr");
+          for (const column of columns) {
+            const td = document.createElement("td");
+            const value = row[column.key];
+            td.textContent = column.type === "text"
+              ? String(value ?? "-")
+              : formatSortableNumber(value, column.type);
+            tr.appendChild(td);
+          }
+          body.appendChild(tr);
+        }
+        if (empty) empty.style.display = orderedRows.length ? "none" : "block";
+        updateHeaderState();
+      }
+
+      header.querySelectorAll("[data-sort-key]").forEach((cell) => {
+        const button = cell.querySelector("button");
+        const handleSort = () => {
+          const key = cell.getAttribute("data-sort-key");
+          if (!key) return;
+          if (sortKey === key) {
+            sortDirection = sortDirection === "asc" ? "desc" : "asc";
+          } else {
+            sortKey = key;
+            sortDirection = defaultDirectionFor(key);
+          }
+          render();
+        };
+        if (button) {
+          button.addEventListener("click", handleSort);
+        } else {
+          cell.addEventListener("click", handleSort);
+        }
+      });
+
+      return {
+        setRows(nextRows) {
+          rows = Array.isArray(nextRows) ? nextRows.slice() : [];
+          render();
+        },
+      };
+    }
+    
+    Plotly.newPlot("chart", figure.data || [], figure.layout || {}, { responsive: true });
+    const statsTable = createSortableStatsTable({
+      tableId: "statsTable",
+      headerId: "statsHeader",
+      bodyId: "statsBody",
+      emptyId: "emptyMessage",
+      columns: statsColumns,
+      defaultSortKey: "name",
+      defaultSortDirection: "asc",
+    });
+    statsTable.setRows(statsRows);
+  </script>
+</body>
+</html>

@@ -10,14 +10,20 @@
         "cache16m",
         "cache64m"
       ],
-      "base_allocators": [],
+      "base_allocators": [
+        "glibc-2.28",
+        "mimalloc-2.2.7",
+        "jemalloc-5.2.1",
+        "jemalloc-5.3.0",
+        "tcmalloc-2.9.1"
+      ],
       "decay_ms": [],
       "matrix_family_label": "tcmalloc",
       "matrix_versions": [
         "tcmalloc-2.9.1"
       ],
       "mode": "matrix",
-      "overview": "Workload: 0 allocators + tcmalloc matrix: 1 version x 4 release rates x 3 thread-cache sizes x 2 decommit modes = 24 combinations",
+      "overview": "Workload: 5 allocators + tcmalloc matrix: 1 version x 4 release rates x 3 thread-cache sizes x 2 decommit modes = 24 combinations",
       "release_rates": [
         1,
         2,
@@ -32,6 +38,11 @@
       ]
     },
     "allocators": [
+      "glibc-2.28",
+      "mimalloc-2.2.7",
+      "jemalloc-5.2.1",
+      "jemalloc-5.3.0",
+      "tcmalloc-2.9.1",
       "tcmalloc-2.9.1/release1/cache32m/decommitfalse",
       "tcmalloc-2.9.1/release1/cache32m/decommittrue",
       "tcmalloc-2.9.1/release1/cache16m/decommitfalse",
@@ -57,241 +68,12 @@
       "tcmalloc-2.9.1/release8/cache64m/decommitfalse",
       "tcmalloc-2.9.1/release8/cache64m/decommittrue"
     ],
-    "chart_count": 10,
+    "chart_count": 21,
     "git_rev": "",
-    "published_at_utc": "2026-03-14 04:28:25 UTC",
-    "run_id": "tcmalloc_matrix_2h_innodb_20260314_012804",
-    "storage_engine": "InnoDB",
-    "test_date": "2026-03-14 01:28:04",
-    "url": "runs/tcmalloc_matrix_2h_innodb_20260314_012804/index.html"
-  },
-  {
-    "allocator_summary": {
-      "aggressive_decommit_modes": [],
-      "background_thread_modes": [],
-      "base_allocators": [
-        "glibc-2.28",
-        "mimalloc-2.2.7",
-        "jemalloc-5.2.1",
-        "jemalloc-5.3.0",
-        "tcmalloc-2.9.1"
-      ],
-      "decay_ms": [],
-      "matrix_family_label": "allocator",
-      "matrix_versions": [],
-      "mode": "comparison",
-      "overview": "Workload comparison: 5 allocators",
-      "release_rates": [],
-      "tested_combinations": 0,
-      "thread_cache_bytes": []
-    },
-    "allocators": [
-      "glibc-2.28",
-      "mimalloc-2.2.7",
-      "jemalloc-5.2.1",
-      "jemalloc-5.3.0",
-      "tcmalloc-2.9.1"
-    ],
-    "chart_count": 11,
-    "git_rev": "",
-    "published_at_utc": "2026-03-12 05:11:01 UTC",
-    "run_id": "full_alloc_2h_innodb_20260312_021038",
-    "storage_engine": "InnoDB",
-    "test_date": "2026-03-12 02:10:38",
-    "url": "runs/full_alloc_2h_innodb_20260312_021038/index.html"
-  },
-  {
-    "allocator_summary": {
-      "aggressive_decommit_modes": [],
-      "background_thread_modes": [],
-      "base_allocators": [
-        "glibc-2.28",
-        "mimalloc-2.2.7",
-        "jemalloc-5.2.1",
-        "jemalloc-5.3.0",
-        "tcmalloc-2.9.1"
-      ],
-      "decay_ms": [],
-      "matrix_family_label": "allocator",
-      "matrix_versions": [],
-      "mode": "comparison",
-      "overview": "Workload comparison: 5 allocators",
-      "release_rates": [],
-      "tested_combinations": 0,
-      "thread_cache_bytes": []
-    },
-    "allocators": [
-      "glibc-2.28",
-      "mimalloc-2.2.7",
-      "jemalloc-5.2.1",
-      "jemalloc-5.3.0",
-      "tcmalloc-2.9.1"
-    ],
-    "chart_count": 10,
-    "git_rev": "",
-    "published_at_utc": "2026-03-10 20:54:39 UTC",
-    "run_id": "full_alloc_2h_innodb_20260310_175416",
-    "storage_engine": "InnoDB",
-    "test_date": "2026-03-10 17:54:16",
-    "url": "runs/full_alloc_2h_innodb_20260310_175416/index.html"
-  },
-  {
-    "allocator_summary": {
-      "aggressive_decommit_modes": [],
-      "background_thread_modes": [],
-      "base_allocators": [
-        "glibc-2.28",
-        "mimalloc-2.2.7",
-        "jemalloc-5.2.1",
-        "jemalloc-5.3.0",
-        "tcmalloc-2.9.1"
-      ],
-      "decay_ms": [],
-      "matrix_family_label": "allocator",
-      "matrix_versions": [],
-      "mode": "comparison",
-      "overview": "Workload comparison: 5 allocators",
-      "release_rates": [],
-      "tested_combinations": 0,
-      "thread_cache_bytes": []
-    },
-    "allocators": [
-      "glibc-2.28",
-      "mimalloc-2.2.7",
-      "jemalloc-5.2.1",
-      "jemalloc-5.3.0",
-      "tcmalloc-2.9.1"
-    ],
-    "chart_count": 10,
-    "git_rev": "",
-    "published_at_utc": "2026-03-10 05:47:50 UTC",
-    "run_id": "full_alloc_2h_innodb_20260310_024730",
-    "storage_engine": "InnoDB",
-    "test_date": "2026-03-10 02:47:30",
-    "url": "runs/full_alloc_2h_innodb_20260310_024730/index.html"
-  },
-  {
-    "allocator_summary": {
-      "aggressive_decommit_modes": [],
-      "background_thread_modes": [
-        "on",
-        "off"
-      ],
-      "base_allocators": [
-        "glibc-2.28",
-        "mimalloc-2.2.7",
-        "jemalloc-5.2.1",
-        "jemalloc-5.3.0",
-        "tcmalloc-2.9.1"
-      ],
-      "decay_ms": [
-        500,
-        1500,
-        3000,
-        6000
-      ],
-      "matrix_family_label": "jemalloc",
-      "matrix_versions": [
-        "jemalloc-5.2.1",
-        "jemalloc-5.3.0"
-      ],
-      "mode": "matrix",
-      "overview": "Workload: 5 allocators + jemalloc matrix: 2 versions x 4 decay values x 2 background modes = 16 combinations",
-      "release_rates": [],
-      "tested_combinations": 16,
-      "thread_cache_bytes": []
-    },
-    "allocators": [
-      "glibc-2.28",
-      "mimalloc-2.2.7",
-      "jemalloc-5.2.1",
-      "jemalloc-5.3.0",
-      "tcmalloc-2.9.1",
-      "jemalloc-5.2.1/decay500/bgon",
-      "jemalloc-5.2.1/decay500/bgoff",
-      "jemalloc-5.2.1/decay1500/bgon",
-      "jemalloc-5.2.1/decay1500/bgoff",
-      "jemalloc-5.2.1/decay3000/bgon",
-      "jemalloc-5.2.1/decay3000/bgoff",
-      "jemalloc-5.2.1/decay6000/bgon",
-      "jemalloc-5.2.1/decay6000/bgoff",
-      "jemalloc-5.3.0/decay500/bgon",
-      "jemalloc-5.3.0/decay500/bgoff",
-      "jemalloc-5.3.0/decay1500/bgon",
-      "jemalloc-5.3.0/decay1500/bgoff",
-      "jemalloc-5.3.0/decay3000/bgon",
-      "jemalloc-5.3.0/decay3000/bgoff",
-      "jemalloc-5.3.0/decay6000/bgon",
-      "jemalloc-5.3.0/decay6000/bgoff"
-    ],
-    "chart_count": 27,
-    "git_rev": "",
-    "published_at_utc": "2026-03-07 06:17:48 UTC",
-    "run_id": "full_alloc_2h_innodb_20260307_031727",
-    "storage_engine": "InnoDB",
-    "test_date": "2026-03-07 03:17:27",
-    "url": "runs/full_alloc_2h_innodb_20260307_031727/index.html"
-  },
-  {
-    "allocator_summary": {
-      "aggressive_decommit_modes": [],
-      "background_thread_modes": [
-        "on",
-        "off"
-      ],
-      "base_allocators": [
-        "glibc-2.28",
-        "mimalloc-2.2.7",
-        "jemalloc-5.2.1",
-        "jemalloc-5.3.0",
-        "tcmalloc-2.9.1"
-      ],
-      "decay_ms": [
-        500,
-        1500,
-        3000,
-        6000
-      ],
-      "matrix_family_label": "jemalloc",
-      "matrix_versions": [
-        "jemalloc-5.2.1",
-        "jemalloc-5.3.0"
-      ],
-      "mode": "matrix",
-      "overview": "Workload: 5 allocators + jemalloc matrix: 2 versions x 4 decay values x 2 background modes = 16 combinations",
-      "release_rates": [],
-      "tested_combinations": 16,
-      "thread_cache_bytes": []
-    },
-    "allocators": [
-      "glibc-2.28",
-      "mimalloc-2.2.7",
-      "jemalloc-5.2.1",
-      "jemalloc-5.3.0",
-      "tcmalloc-2.9.1",
-      "jemalloc-5.2.1/decay500/bgon",
-      "jemalloc-5.2.1/decay500/bgoff",
-      "jemalloc-5.2.1/decay1500/bgon",
-      "jemalloc-5.2.1/decay1500/bgoff",
-      "jemalloc-5.2.1/decay3000/bgon",
-      "jemalloc-5.2.1/decay3000/bgoff",
-      "jemalloc-5.2.1/decay6000/bgon",
-      "jemalloc-5.2.1/decay6000/bgoff",
-      "jemalloc-5.3.0/decay500/bgon",
-      "jemalloc-5.3.0/decay500/bgoff",
-      "jemalloc-5.3.0/decay1500/bgon",
-      "jemalloc-5.3.0/decay1500/bgoff",
-      "jemalloc-5.3.0/decay3000/bgon",
-      "jemalloc-5.3.0/decay3000/bgoff",
-      "jemalloc-5.3.0/decay6000/bgon",
-      "jemalloc-5.3.0/decay6000/bgoff"
-    ],
-    "chart_count": 27,
-    "git_rev": "",
-    "published_at_utc": "2026-03-05 02:27:10 UTC",
-    "run_id": "full_alloc_2h_rocksdb_20260304_232646",
-    "storage_engine": "RocksDB",
-    "test_date": "2026-03-04 23:26:46",
-    "url": "runs/full_alloc_2h_rocksdb_20260304_232646/index.html"
+    "published_at_utc": "2026-03-29 12:49:41 UTC",
+    "run_id": "sysbench_join_2h_tcmalloc_matrix_5m_20260323_022356",
+    "storage_engine": "",
+    "test_date": "2026-03-23 02:23:56",
+    "url": "runs/sysbench_join_2h_tcmalloc_matrix_5m_20260323_022356/index.html"
   }
 ]
