@@ -309,13 +309,31 @@
     .status-pill.success { background: var(--success-bg); color: var(--success); }
     .status-pill.partial { background: var(--warning-bg); color: var(--warning); }
     .status-pill.failed, .status-pill.missing { background: var(--danger-bg); color: var(--danger); }
+
+    .brand-link {
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.18s ease, opacity 0.18s ease;
+    }
+
+    .brand-link:hover,
+    .brand-link:focus-visible {
+      color: var(--accent);
+    }
+
+    .brand-link:focus-visible {
+      outline: 2px solid currentColor;
+      outline-offset: 3px;
+      border-radius: 6px;
+    }
+
   </style>
 </head>
 <body>
   <div class="page">
     <div class="top">
-      <p class="kicker">Malloc Tests V2</p>
-      <h1>Settings Explorer</h1>
+      <p class="kicker"><a class="brand-link" href="https://matias-sanchez.github.io/malloc-results/">Malloc Tests V2</a></p>
+      <h1><a class="brand-link" href="https://matias-sanchez.github.io/malloc-results/">Settings Explorer</a></h1>
       <div class="meta">
         <span class="chip">run: sysbench_join_2h_tcmalloc_matrix_5m_20260323_022356</span>
         <span class="chip">captured at: 2026-03-23T05:37:11Z</span>
